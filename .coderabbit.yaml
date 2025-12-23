@@ -1,154 +1,71 @@
 # CodeRabbit Configuration for Happyland Gardens
 
-# Language and framework awareness
-language: typescript
-frameworks:
-  - nextjs
-  - react
-  - tailwindcss
+# Language for review comments (human language, not programming)
+language: en-US
 
-# Review settings
 reviews:
-  # Request changes for critical issues
+  profile: chill  # or 'assertive'
   request_changes_workflow: true
 
-  # Auto-approve minor changes
-  auto_approve:
-    enabled: false
-
-  # Review focus areas
-  focus_areas:
-    - security
-    - performance
-    - accessibility
-    - best_practices
-    - code_quality
-    - testing
-
-# What to review
-review_settings:
-  # File patterns to review
-  include:
+  # Path filters for what to review
+  path_filters:
     - "**/*.ts"
     - "**/*.tsx"
     - "**/*.js"
     - "**/*.jsx"
     - "**/*.css"
+    - "!node_modules/**"
+    - "!.next/**"
+    - "!out/**"
+    - "!build/**"
+    - "!dist/**"
+    - "!*.config.js"
+    - "!*.config.ts"
+    - "!package-lock.json"
 
-  # File patterns to ignore
-  exclude:
-    - "node_modules/**"
-    - ".next/**"
-    - "out/**"
-    - "build/**"
-    - "dist/**"
-    - "*.config.js"
-    - "*.config.ts"
-    - "package-lock.json"
+  # Custom path-specific instructions
+  path_instructions:
+    - path: "**/*.{ts,tsx}"
+      instructions: |
+        - Enforce TypeScript strict mode
+        - Warn on usage of 'any' type
+        - Check React hooks rules
+        - Prefer named exports over default exports
+        - Ensure proper type safety
 
-  # Maximum files to review per PR
-  max_files: 50
+    - path: "**/components/**/*.{ts,tsx}"
+      instructions: |
+        - Ensure Next.js Image component is used instead of <img>
+        - Verify all images have alt text for accessibility
+        - Flag console.log statements
+        - Check for proper React component patterns
+        - Ensure accessibility best practices (ARIA labels, semantic HTML)
 
-# Issue detection
-checks:
-  # Code quality
-  code_quality:
-    enabled: true
-    severity: warning
+    - path: "**/*.css"
+      instructions: |
+        - Ensure Tailwind utility classes are used correctly
+        - Check for responsive design patterns
+        - Verify color usage matches design system
 
-  # Security vulnerabilities
-  security:
-    enabled: true
-    severity: error
+  # Label configuration
+  labeling_instructions:
+    - label: "needs-review"
+      instructions: "Apply to all PRs pending review"
+    - label: "coderabbit-reviewed"
+      instructions: "Apply after CodeRabbit completes review"
 
-  # Performance issues
-  performance:
-    enabled: true
-    severity: warning
+  auto_apply_labels: true
 
-  # Accessibility issues
-  accessibility:
-    enabled: true
-    severity: warning
+  # Enable various integrations
+  tools:
+    eslint:
+      enabled: true
+    github-checks:
+      enabled: true
+      timeout_ms: 90000
 
-  # Best practices
-  best_practices:
-    enabled: true
-    severity: info
-
-  # Unused code
-  unused_code:
-    enabled: true
-    severity: info
-
-  # TypeScript specific
-  typescript:
-    strict_mode: true
-    no_any: warning
-
-  # React specific
-  react:
-    hooks_rules: error
-    component_patterns: warning
-
-# Custom rules for Happyland Gardens
-custom_rules:
-  - name: "No console.log in production"
-    pattern: "console\\.log"
-    severity: error
-    message: "Remove console.log before merging to production"
-
-  - name: "Use Next.js Image component"
-    pattern: "<img"
-    severity: warning
-    message: "Use Next.js Image component for better performance"
-
-  - name: "Prefer named exports"
-    pattern: "export default"
-    severity: info
-    message: "Consider using named exports for better tree-shaking"
-
-  - name: "Add alt text to images"
-    pattern: "<Image[^>]+(?!alt=)"
-    severity: error
-    message: "All images must have alt text for accessibility"
-
-# Comment settings
-comments:
-  # Comment on every file reviewed
-  per_file: true
-
-  # Summary comment on PR
-  summary: true
-
-  # Tone of comments
-  tone: professional
-
-  # Include code suggestions
-  suggestions: true
-
-  # Include fix examples
-  fix_examples: true
-
-# AI behavior
-ai_settings:
-  # How verbose should CodeRabbit be
-  verbosity: moderate
-
-  # Should CodeRabbit ask questions
-  ask_questions: true
-
-  # Should CodeRabbit provide context
-  provide_context: true
-
-  # Learning from previous reviews
-  learn_from_feedback: true
-
-# Integration settings
+# GitHub integration
 integrations:
   github:
     enabled: true
     auto_label: true
-    labels:
-      - "needs-review"
-      - "coderabbit-reviewed"
