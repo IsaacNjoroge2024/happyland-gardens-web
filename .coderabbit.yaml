@@ -1,0 +1,91 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+# CodeRabbit Configuration for Happyland Gardens
+
+# Language for review comments (human language, not programming)
+language: en-US
+
+# Review configuration
+reviews:
+  profile: chill  # Options: 'chill' or 'assertive'
+  request_changes_workflow: true
+  high_level_summary: true
+  review_status: true
+  poem: false
+  collapse_walkthrough: false
+
+  # Path filters for what to review
+  path_filters:
+    - "**/*.ts"
+    - "**/*.tsx"
+    - "**/*.js"
+    - "**/*.jsx"
+    - "**/*.css"
+    - ".github/workflows/**/*.yml"  # Include workflow files
+    - ".github/workflows/**/*.yaml"
+    - "!node_modules/**"
+    - "!.next/**"
+    - "!out/**"
+    - "!build/**"
+    - "!dist/**"
+    - "!*.config.js"
+    - "!package-lock.json"
+
+  # Custom path-specific instructions
+  path_instructions:
+    - path: "**/*.{ts,tsx}"
+      instructions: |
+        - Enforce TypeScript strict mode
+        - Warn on usage of 'any' type
+        - Check React hooks rules
+        - Prefer named exports over default exports
+        - Ensure proper type safety
+
+    - path: "**/components/**/*.{ts,tsx}"
+      instructions: |
+        - Ensure Next.js Image component is used instead of <img>
+        - Verify all images have alt text for accessibility
+        - Flag console.log statements
+        - Check for proper React component patterns
+        - Ensure accessibility best practices (ARIA labels, semantic HTML)
+
+    - path: "**/*.css"
+      instructions: |
+        - Ensure Tailwind utility classes are used correctly
+        - Check for responsive design patterns
+        - Verify color usage matches design system
+
+    - path: ".github/workflows/**/*.{yml,yaml}"
+      instructions: |
+        - Check for proper permissions configuration
+        - Verify Node.js versions are current LTS
+        - Ensure secrets are properly referenced
+        - Check for security best practices
+
+  # Auto-review settings
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+    ignore_title_keywords:
+      - "WIP"
+      - "DO NOT REVIEW"
+      - "DRAFT"
+
+  # Tools configuration
+  tools:
+    eslint:
+      enabled: true
+    github-checks:
+      enabled: true
+      timeout_ms: 90000
+
+# Chat settings
+chat:
+  auto_reply: true
+
+# Knowledge base
+knowledge_base:
+  learnings:
+    scope: global  # or 'local'
+
+  # Project-specific instructions
+  opt_out: false
