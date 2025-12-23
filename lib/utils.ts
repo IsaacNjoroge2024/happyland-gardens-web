@@ -17,7 +17,7 @@ export function formatPhoneNumber(phone: string): string {
   const cleaned = phone.replace(/\D/g, "");
 
   // Format as +254 XXX XXX XXX
-  if (cleaned.startsWith("254")) {
+  if (cleaned.startsWith("254") && cleaned.length === 12) {
     return `+254 ${cleaned.slice(3, 6)} ${cleaned.slice(6, 9)} ${cleaned.slice(9)}`;
   }
 
