@@ -1,11 +1,17 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
 # CodeRabbit Configuration for Happyland Gardens
 
 # Language for review comments (human language, not programming)
 language: en-US
 
+# Review configuration
 reviews:
-  profile: chill  # or 'assertive'
+  profile: chill  # Options: 'chill' or 'assertive'
   request_changes_workflow: true
+  high_level_summary: true
+  review_status: true
+  poem: false
+  collapse_walkthrough: false
 
   # Path filters for what to review
   path_filters:
@@ -14,13 +20,14 @@ reviews:
     - "**/*.js"
     - "**/*.jsx"
     - "**/*.css"
+    - ".github/workflows/**/*.yml"  # Include workflow files
+    - ".github/workflows/**/*.yaml"
     - "!node_modules/**"
     - "!.next/**"
     - "!out/**"
     - "!build/**"
     - "!dist/**"
     - "!*.config.js"
-    - "!*.config.ts"
     - "!package-lock.json"
 
   # Custom path-specific instructions
@@ -47,16 +54,23 @@ reviews:
         - Check for responsive design patterns
         - Verify color usage matches design system
 
-  # Label configuration
-  labeling_instructions:
-    - label: "needs-review"
-      instructions: "Apply to all PRs pending review"
-    - label: "coderabbit-reviewed"
-      instructions: "Apply after CodeRabbit completes review"
+    - path: ".github/workflows/**/*.{yml,yaml}"
+      instructions: |
+        - Check for proper permissions configuration
+        - Verify Node.js versions are current LTS
+        - Ensure secrets are properly referenced
+        - Check for security best practices
 
-  auto_apply_labels: true
+  # Auto-review settings
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+    ignore_title_keywords:
+      - "WIP"
+      - "DO NOT REVIEW"
+      - "DRAFT"
 
-  # Enable various integrations
+  # Tools configuration
   tools:
     eslint:
       enabled: true
@@ -64,8 +78,14 @@ reviews:
       enabled: true
       timeout_ms: 90000
 
-# GitHub integration
-integrations:
-  github:
-    enabled: true
-    auto_label: true
+# Chat settings
+chat:
+  auto_reply: true
+
+# Knowledge base
+knowledge_base:
+  learnings:
+    scope: global  # or 'local'
+
+  # Project-specific instructions
+  opt_out: false
