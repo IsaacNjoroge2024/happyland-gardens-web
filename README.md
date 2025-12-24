@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Happyland Gardens - Event Venue Website
+
+This is a [Next.js](https://nextjs.org) project for Happyland Gardens, a premier event venue in Nairobi, Kenya.
 
 ## Getting Started
 
-First, run the development server:
+First, install dependencies:
+
+```bash
+npm install
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Updating Site Content
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+All static content is centralized in the `/data` directory for easy updates without touching component code.
+
+### Contact Information
+
+Edit `/data/contact.ts` to update:
+
+- Business name, phone, email
+- Physical address
+- Google Maps coordinates
+- Social media links
+- Business hours
+
+### Event Types
+
+Edit `/data/events.ts` to:
+
+- Add new event types
+- Update event descriptions
+- Modify capacity and features
+- Change event images
+
+### About Information
+
+Edit `/data/about.ts` to update:
+
+- Company mission statement
+- Company story/history
+- Key highlights
+- Year established
+
+### Site Metadata (SEO)
+
+Edit `/data/metadata.ts` to update:
+
+- Site name and description
+- SEO keywords
+- Open Graph image
+- Site URL
+
+### Environment Variables
+
+Copy `.env.example` to `.env.local` and update with your values:
+
+- Google Analytics ID
+- Contact information
+- Site URL
+
+## Available Scripts
+
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npm run lint         # Run ESLint
+npm run lint:fix     # Fix ESLint issues
+npm run type-check   # Run TypeScript type checking
+npm run format       # Format code with Prettier
+npm run format:check # Check code formatting
+```
+
+## Project Structure
+
+```
+├── src/app/          # Next.js pages and layouts
+├── components/       # React components
+│   └── ui/          # Reusable UI components
+├── data/            # Static site content (UPDATE HERE)
+├── lib/             # Utility functions
+├── types/           # TypeScript type definitions
+├── public/          # Static assets (images, etc.)
+└── .github/         # GitHub workflows and configs
+```
+
+## Documentation
+
+- **Design System**: See `DESIGN-SYSTEM.md` for colors, typography, and component usage
+- **Development Guide**: See `CLAUDE.md` for detailed development instructions
+- **Component Showcase**: Visit `/test-components` to see all UI components
+
+## Tech Stack
+
+- **Framework**: Next.js 16.1+ with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS 4
+- **UI Components**: Custom design system
+- **Animations**: Framer Motion
+- **Icons**: React Icons
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+To learn more about Next.js, check out:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Learn Next.js](https://nextjs.org/learn)
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The easiest way to deploy is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

@@ -5,6 +5,7 @@ import Section from "@/components/ui/Section";
 import Spinner from "@/components/ui/Spinner";
 import { H1, H2, H3, H4, BodyText, Caption, Quote } from "@/components/ui/Typography";
 import { FaPhone, FaWhatsapp } from "react-icons/fa";
+import { contactInfo, eventTypes, aboutInfo, siteMetadata } from "@/data";
 
 export default function TestComponents() {
   return (
@@ -117,6 +118,77 @@ export default function TestComponents() {
         <Container size="lg">
           <H2 className="mb-4">Large Container (Default)</H2>
           <BodyText>Max width: 1280px</BodyText>
+        </Container>
+      </Section>
+
+      {/* Static Data Test */}
+      <Section background="white">
+        <Container>
+          <H2 className="mb-8">Static Data Configuration Test</H2>
+
+          {/* Contact Info Test */}
+          <Card className="p-6 mb-6">
+            <H3 className="mb-4">Contact Information</H3>
+            <div className="space-y-2">
+              <BodyText>
+                <strong>Business:</strong> {contactInfo.businessName}
+              </BodyText>
+              <BodyText>
+                <strong>Phone:</strong> {contactInfo.phone}
+              </BodyText>
+              <BodyText>
+                <strong>Email:</strong> {contactInfo.email}
+              </BodyText>
+              <BodyText>
+                <strong>Address:</strong> {contactInfo.address}
+              </BodyText>
+              <BodyText>
+                <strong>Hours (Weekdays):</strong> {contactInfo.businessHours.weekdays}
+              </BodyText>
+            </div>
+          </Card>
+
+          {/* Event Types Test */}
+          <Card className="p-6 mb-6">
+            <H3 className="mb-4">Event Types ({eventTypes.length} total)</H3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {eventTypes.slice(0, 4).map((event) => (
+                <div key={event.id} className="border-l-4 border-primary-500 pl-4">
+                  <H4>{event.name}</H4>
+                  <Caption>Capacity: {event.capacity} guests</Caption>
+                  <Caption className="mt-1">{event.features.length} features</Caption>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          {/* About Info Test */}
+          <Card className="p-6 mb-6">
+            <H3 className="mb-4">About Information</H3>
+            <BodyText>
+              <strong>Established:</strong> {aboutInfo.established ?? "N/A"}
+            </BodyText>
+            <BodyText className="mt-2">
+              <strong>Mission:</strong> {aboutInfo.mission.slice(0, 100)}...
+            </BodyText>
+            <BodyText className="mt-2">
+              <strong>Highlights:</strong> {aboutInfo.highlights.length} key features
+            </BodyText>
+          </Card>
+
+          {/* Site Metadata Test */}
+          <Card className="p-6">
+            <H3 className="mb-4">Site Metadata</H3>
+            <BodyText>
+              <strong>Site Name:</strong> {siteMetadata.siteName}
+            </BodyText>
+            <BodyText className="mt-2">
+              <strong>Keywords:</strong> {siteMetadata.keywords.length} SEO keywords configured
+            </BodyText>
+            <BodyText className="mt-2">
+              <strong>Description:</strong> {siteMetadata.siteDescription.slice(0, 100)}...
+            </BodyText>
+          </Card>
         </Container>
       </Section>
     </div>
