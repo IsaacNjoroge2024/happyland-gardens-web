@@ -166,7 +166,7 @@ export default function TestComponents() {
           <Card className="p-6 mb-6">
             <H3 className="mb-4">About Information</H3>
             <BodyText>
-              <strong>Established:</strong> {aboutInfo.established}
+              <strong>Established:</strong> {aboutInfo.established ?? "N/A"}
             </BodyText>
             <BodyText className="mt-2">
               <strong>Mission:</strong> {aboutInfo.mission.slice(0, 100)}...

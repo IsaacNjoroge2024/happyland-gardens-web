@@ -25,6 +25,7 @@ All static content is centralized in the `/data` directory for easy updates with
 ### Contact Information
 
 Edit `/data/contact.ts` to update:
+
 - Business name, phone, email
 - Physical address
 - Google Maps coordinates
@@ -34,6 +35,7 @@ Edit `/data/contact.ts` to update:
 ### Event Types
 
 Edit `/data/events.ts` to:
+
 - Add new event types
 - Update event descriptions
 - Modify capacity and features
@@ -42,6 +44,7 @@ Edit `/data/events.ts` to:
 ### About Information
 
 Edit `/data/about.ts` to update:
+
 - Company mission statement
 - Company story/history
 - Key highlights
@@ -50,6 +53,7 @@ Edit `/data/about.ts` to update:
 ### Site Metadata (SEO)
 
 Edit `/data/metadata.ts` to update:
+
 - Site name and description
 - SEO keywords
 - Open Graph image
@@ -58,6 +62,7 @@ Edit `/data/metadata.ts` to update:
 ### Environment Variables
 
 Copy `.env.example` to `.env.local` and update with your values:
+
 - Google Analytics ID
 - Contact information
 - Site URL

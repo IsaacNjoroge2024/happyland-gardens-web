@@ -6,10 +6,10 @@ import { ContactInfo } from "@/types";
  */
 export const contactInfo: ContactInfo = {
   businessName: "Happyland Gardens",
-  phone: "+254712345678",
-  whatsapp: "+254712345678",
+  phone: "+2540113414143",
+  whatsapp: "+2540113414143",
   email: "info@happylandgardens.co.ke",
-  address: "Kiambu Road, Nairobi, Kenya",
+  address: "Kagundo Road, Nairobi, Kenya",
   location: {
     latitude: -1.2921,
     longitude: 36.8219,
