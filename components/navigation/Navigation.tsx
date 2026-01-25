@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiMenu, HiX } from "react-icons/hi";
@@ -83,6 +83,11 @@ export function Navigation({ className }: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(getInitialScrollState);
   const [activeSection, setActiveSection] = useState<string>(getInitialActiveSection);
 
+  // Refs for focus management
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const wasMobileMenuOpen = useRef(false);
+
   /**
    * Handle scroll events to update header appearance and active section
    */
@@ -112,12 +117,29 @@ export function Navigation({ className }: NavigationProps) {
   }, []);
 
   /**
-   * Set up scroll listener
+   * Set up scroll listener and check initial scroll position
    */
   useEffect(() => {
+    // Defer initial scroll check to handle deep links (e.g., /#about)
+    const timeoutId = setTimeout(handleScroll, 0);
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [handleScroll]);
+
+  /**
+   * Focus management for mobile menu accessibility
+   */
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      closeButtonRef.current?.focus();
+    } else if (wasMobileMenuOpen.current) {
+      menuButtonRef.current?.focus();
+    }
+    wasMobileMenuOpen.current = isMobileMenuOpen;
+  }, [isMobileMenuOpen]);
 
   /**
    * Prevent body scroll when mobile menu is open
@@ -275,6 +297,7 @@ export function Navigation({ className }: NavigationProps) {
 
             {/* Mobile Menu Button */}
             <button
+              ref={menuButtonRef}
               type="button"
               onClick={toggleMobileMenu}
               className="flex h-10 w-10 items-center justify-center rounded-lg text-gray-700 transition-colors hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 md:hidden"
@@ -330,6 +353,7 @@ export function Navigation({ className }: NavigationProps) {
                   {contactInfo.businessName}
                 </Link>
                 <button
+                  ref={closeButtonRef}
                   type="button"
                   onClick={closeMobileMenu}
                   className="flex h-10 w-10 items-center justify-center rounded-lg text-gray-700 transition-colors hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
@@ -415,5 +439,3 @@ export function Navigation({ className }: NavigationProps) {
     </>
   );
 }
-
-export default Navigation;
