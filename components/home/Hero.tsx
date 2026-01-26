@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiChevronDown } from "react-icons/hi2";
 import ImageWrapper from "@/components/ui/ImageWrapper";
@@ -41,6 +40,14 @@ export const Hero: React.FC<HeroProps> = ({ data }) => {
       onMouseLeave={() => setIsPaused(false)}
       aria-label="Hero section"
     >
+      {/* Skip to content link for screen readers - must be first for keyboard users */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-primary-600 focus:rounded-lg focus:shadow-lg"
+      >
+        Skip to content
+      </a>
+
       {/* Background Image Slideshow */}
       <div className="absolute inset-0 z-0">
         {currentImage && (
@@ -76,6 +83,7 @@ export const Hero: React.FC<HeroProps> = ({ data }) => {
           {data.images.map((_, index) => (
             <button
               key={index}
+              type="button"
               onClick={() => setCurrentSlide(index)}
               className={cn(
                 "h-2 rounded-full transition-all duration-300",
@@ -126,21 +134,28 @@ export const Hero: React.FC<HeroProps> = ({ data }) => {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
-          <Link href={data.primaryCta.href}>
-            <Button variant="primary" size="lg" className="w-full sm:w-auto min-w-[200px]">
-              {data.primaryCta.text}
-            </Button>
-          </Link>
-          <Link href={data.secondaryCta.href}>
-            <Button variant="outline" size="lg" className="w-full sm:w-auto min-w-[200px]">
-              {data.secondaryCta.text}
-            </Button>
-          </Link>
+          <Button
+            href={data.primaryCta.href}
+            variant="primary"
+            size="lg"
+            className="w-full sm:w-auto min-w-[200px]"
+          >
+            {data.primaryCta.text}
+          </Button>
+          <Button
+            href={data.secondaryCta.href}
+            variant="outline"
+            size="lg"
+            className="w-full sm:w-auto min-w-[200px]"
+          >
+            {data.secondaryCta.text}
+          </Button>
         </motion.div>
       </div>
 
       {/* Scroll Indicator */}
       <motion.button
+        type="button"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 1.2 }}
@@ -159,14 +174,6 @@ export const Hero: React.FC<HeroProps> = ({ data }) => {
           <HiChevronDown className="w-8 h-8 sm:w-10 sm:h-10" />
         </motion.div>
       </motion.button>
-
-      {/* Skip to content link for screen readers */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-primary-600 focus:rounded-lg focus:shadow-lg"
-      >
-        Skip to content
-      </a>
     </section>
   );
 };
