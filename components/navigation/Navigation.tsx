@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiMenu, HiX } from "react-icons/hi";
 import { cn } from "@/lib/utils";
-import Button from "@/components/ui/Button";
+import { Button } from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 import { contactInfo } from "@/data";
 

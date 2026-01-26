@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiChevronDown } from "react-icons/hi2";
 import ImageWrapper from "@/components/ui/ImageWrapper";
-import Button from "@/components/ui/Button";
+import { Button } from "@/components/ui/Button";
 import { HeroData } from "@/types";
 import { cn } from "@/lib/utils";
 
@@ -18,6 +18,7 @@ export const Hero: React.FC<HeroProps> = ({ data }) => {
   const currentImage = data.images[currentSlide];
 
   const nextSlide = useCallback(() => {
+    if (data.images.length === 0) return;
     setCurrentSlide((prev) => (prev + 1) % data.images.length);
   }, [data.images.length]);
 

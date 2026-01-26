@@ -70,11 +70,14 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
 
     // Render as anchor if href is provided
     if ("href" in props && props.href) {
+      const isDisabledOrLoading = disabled || isLoading;
       return (
         <a
           ref={ref as React.Ref<HTMLAnchorElement>}
-          className={cn(classes, disabled && "pointer-events-none")}
-          aria-disabled={disabled}
+          className={cn(classes, isDisabledOrLoading && "pointer-events-none")}
+          aria-disabled={isDisabledOrLoading || undefined}
+          tabIndex={isDisabledOrLoading ? -1 : undefined}
+          onClick={isDisabledOrLoading ? (e) => e.preventDefault() : undefined}
           {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}
         >
           {content}
@@ -99,4 +102,4 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
 
 Button.displayName = "Button";
 
-export default Button;
+export { Button };
