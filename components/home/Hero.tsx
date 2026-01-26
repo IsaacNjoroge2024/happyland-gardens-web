@@ -13,9 +13,10 @@ interface HeroProps {
   data: HeroData;
 }
 
-const Hero: React.FC<HeroProps> = ({ data }) => {
+export const Hero: React.FC<HeroProps> = ({ data }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const currentImage = data.images[currentSlide];
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % data.images.length);
@@ -30,13 +31,7 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
 
   const scrollToContent = () => {
     const mainContent = document.getElementById("main-content");
-    if (mainContent) {
-      const heroHeight = window.innerHeight;
-      window.scrollTo({
-        top: heroHeight,
-        behavior: "smooth",
-      });
-    }
+    mainContent?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -48,26 +43,28 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
     >
       {/* Background Image Slideshow */}
       <div className="absolute inset-0 z-0">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentSlide}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1, ease: "easeInOut" }}
-            className="absolute inset-0"
-          >
-            <ImageWrapper
-              src={data.images[currentSlide].src}
-              alt={data.images[currentSlide].alt}
-              fill
-              priority={currentSlide === 0}
-              objectFit="cover"
-              sizes="100vw"
-              className="brightness-75"
-            />
-          </motion.div>
-        </AnimatePresence>
+        {currentImage && (
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSlide}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1, ease: "easeInOut" }}
+              className="absolute inset-0"
+            >
+              <ImageWrapper
+                src={currentImage.src}
+                alt={currentImage.alt}
+                fill
+                priority={currentSlide === 0}
+                objectFit="cover"
+                sizes="100vw"
+                className="brightness-75"
+              />
+            </motion.div>
+          </AnimatePresence>
+        )}
 
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/50" />
@@ -173,5 +170,3 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
     </section>
   );
 };
-
-export default Hero;
