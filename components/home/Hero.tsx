@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 
 interface HeroProps {
   data: HeroData;
+  // TODO: Implement parallax effect based on data.enableParallax flag
 }
 
 export const Hero: React.FC<HeroProps> = ({ data }) => {
@@ -91,7 +92,7 @@ export const Hero: React.FC<HeroProps> = ({ data }) => {
                 index === currentSlide ? "bg-white w-8" : "bg-white/50 w-2 hover:bg-white/75"
               )}
               aria-label={`Go to slide ${index + 1}`}
-              aria-current={index === currentSlide}
+              aria-current={index === currentSlide ? "true" : undefined}
             />
           ))}
         </div>
