@@ -85,3 +85,33 @@ export interface SiteMetadata {
   ogImage: string;
   keywords: string[];
 }
+
+/**
+ * Hero image interface
+ */
+export interface HeroImage {
+  src: string;
+  alt: string;
+}
+
+/**
+ * Hero CTA (Call-to-Action) interface
+ */
+export interface HeroCTA {
+  text: string;
+  href: string;
+}
+
+/**
+ * Hero section data interface
+ */
+export interface HeroData {
+  headline: string;
+  subheadline: string;
+  description: string;
+  primaryCta: HeroCTA;
+  secondaryCta: HeroCTA;
+  images: HeroImage[];
+  slideshowInterval: number;
+  enableParallax: boolean;
+}
