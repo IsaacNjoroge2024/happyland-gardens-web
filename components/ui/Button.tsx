@@ -1,17 +1,24 @@
-import React, { ButtonHTMLAttributes, forwardRef } from "react";
+import React, { ButtonHTMLAttributes, AnchorHTMLAttributes, forwardRef } from "react";
 import { cn } from "@/lib/utils";
 import Spinner from "./Spinner";
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+type BaseButtonProps = {
   variant?: "primary" | "secondary" | "outline" | "ghost";
   size?: "sm" | "md" | "lg";
   isLoading?: boolean;
   loadingText?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
-}
+  disabled?: boolean;
+};
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+export type ButtonProps = BaseButtonProps &
+  (
+    | (Omit<ButtonHTMLAttributes<HTMLButtonElement>, "disabled"> & { href?: never })
+    | (Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "aria-disabled"> & { href: string })
+  );
+
+const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
   (
     {
       className,
@@ -46,25 +53,50 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       lg: "px-6 py-3 text-lg gap-2.5",
     };
 
+    const content = isLoading ? (
+      <>
+        <Spinner size="sm" />
+        {loadingText && <span>{loadingText}</span>}
+      </>
+    ) : (
+      <>
+        {leftIcon && <span>{leftIcon}</span>}
+        {children}
+        {rightIcon && <span>{rightIcon}</span>}
+      </>
+    );
+
+    const classes = cn(baseStyles, variants[variant], sizes[size], className);
+
+    // Render as anchor if href is provided
+    if ("href" in props && props.href) {
+      const isDisabledOrLoading = disabled || isLoading;
+      const { onClick: externalOnClick, ...restAnchorProps } =
+        props as AnchorHTMLAttributes<HTMLAnchorElement>;
+      return (
+        <a
+          ref={ref as React.Ref<HTMLAnchorElement>}
+          {...restAnchorProps}
+          className={cn(classes, isDisabledOrLoading && "pointer-events-none")}
+          aria-disabled={isDisabledOrLoading || undefined}
+          tabIndex={isDisabledOrLoading ? -1 : undefined}
+          onClick={isDisabledOrLoading ? (e) => e.preventDefault() : externalOnClick}
+        >
+          {content}
+        </a>
+      );
+    }
+
+    // Render as button
     return (
       <button
-        ref={ref}
-        className={cn(baseStyles, variants[variant], sizes[size], className)}
+        ref={ref as React.Ref<HTMLButtonElement>}
+        className={classes}
         disabled={disabled || isLoading}
-        {...props}
+        type="button"
+        {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}
       >
-        {isLoading ? (
-          <>
-            <Spinner size="sm" />
-            {loadingText && <span>{loadingText}</span>}
-          </>
-        ) : (
-          <>
-            {leftIcon && <span>{leftIcon}</span>}
-            {children}
-            {rightIcon && <span>{rightIcon}</span>}
-          </>
-        )}
+        {content}
       </button>
     );
   }
@@ -72,4 +104,4 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
 Button.displayName = "Button";
 
-export default Button;
+export { Button };
