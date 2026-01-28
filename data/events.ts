@@ -12,7 +12,7 @@ export const eventTypes: EventType[] = [
     description:
       "Create your dream wedding at our beautiful outdoor venue. Our lush gardens and elegant spaces provide the perfect backdrop for your special day. From intimate ceremonies to grand celebrations, we make your wedding unforgettable.",
     images: [
-      "/images/events/weddings-1.jpg",
+      "/images/events/wedding-card.png",
       "/images/events/weddings-2.jpg",
       "/images/events/weddings-3.jpg",
     ],
@@ -36,7 +36,7 @@ export const eventTypes: EventType[] = [
     description:
       "Host your next corporate event in our professional and inspiring environment. Perfect for conferences, team building activities, product launches, and company celebrations. Modern facilities meet natural beauty.",
     images: [
-      "/images/events/corporate-1.jpg",
+      "/images/events/coorporate-event-card.png",
       "/images/events/corporate-2.jpg",
       "/images/events/corporate-3.jpg",
     ],
@@ -60,7 +60,7 @@ export const eventTypes: EventType[] = [
     description:
       "Celebrate your special day in style! Whether it's a milestone birthday or an intimate gathering, our venue offers the perfect setting for memorable birthday celebrations with family and friends.",
     images: [
-      "/images/events/birthday-1.jpg",
+      "/images/events/birthday-card.png",
       "/images/events/birthday-2.jpg",
       "/images/events/birthday-3.jpg",
     ],
@@ -84,7 +84,7 @@ export const eventTypes: EventType[] = [
     description:
       "Welcome the new arrival in our charming garden setting. Our intimate spaces are perfect for baby showers, offering a warm and welcoming atmosphere for this special celebration with loved ones.",
     images: [
-      "/images/events/baby-shower-1.jpg",
+      "/images/events/baby-shower-card.png",
       "/images/events/baby-shower-2.jpg",
       "/images/events/baby-shower-3.jpg",
     ],
@@ -108,7 +108,7 @@ export const eventTypes: EventType[] = [
     description:
       "Celebrate academic achievements in our elegant venue. Perfect for graduation parties, our space offers a sophisticated yet fun atmosphere to honor your graduate's success with family and friends.",
     images: [
-      "/images/events/graduation-1.jpg",
+      "/images/events/graduation-card.png",
       "/images/events/graduation-2.jpg",
       "/images/events/graduation-3.jpg",
     ],
@@ -132,7 +132,7 @@ export const eventTypes: EventType[] = [
     description:
       "Bring the whole family together in our spacious and welcoming venue. Our gardens provide the perfect setting for family reunions, offering plenty of space for activities, dining, and making memories.",
     images: [
-      "/images/events/reunion-1.jpg",
+      "/images/events/family-reunions-card.png",
       "/images/events/reunion-2.jpg",
       "/images/events/reunion-3.jpg",
     ],
@@ -156,7 +156,7 @@ export const eventTypes: EventType[] = [
     description:
       "Experience the beauty of outdoor entertaining in our stunning gardens. Perfect for any celebration, from intimate gatherings to grand garden parties surrounded by nature's beauty.",
     images: [
-      "/images/events/garden-party-1.jpg",
+      "/images/events/garden-parties-card.png",
       "/images/events/garden-party-2.jpg",
       "/images/events/garden-party-3.jpg",
     ],
@@ -180,7 +180,7 @@ export const eventTypes: EventType[] = [
     description:
       "Start your journey to forever in our romantic garden setting. Our venue provides the perfect intimate atmosphere for engagement parties and celebrations of love.",
     images: [
-      "/images/events/engagement-1.jpg",
+      "/images/events/engagment-parties-card.png",
       "/images/events/engagement-2.jpg",
       "/images/events/engagement-3.jpg",
     ],

@@ -97,7 +97,7 @@ export default function EventsPage() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <ImageWrapper
-            src="/images/hero/hero-3.jpg"
+            src="/images/events/wedding-card.png"
             alt="Beautiful events at Happyland Gardens"
             fill
             priority
