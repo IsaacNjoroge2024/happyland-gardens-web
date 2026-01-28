@@ -6,3 +6,4 @@ export { eventTypes } from "./events";
 export { aboutInfo } from "./about";
 export { siteMetadata } from "./metadata";
 export { heroData } from "./hero";
+export { galleryImages } from "./gallery";
