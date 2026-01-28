@@ -15,14 +15,18 @@ interface GalleryProps {
 
 export const Gallery: React.FC<GalleryProps> = ({ images }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const hasImages = images.length > 0;
+  const safeIndex = hasImages ? Math.min(currentSlide, images.length - 1) : 0;
 
   const handlePrevSlide = useCallback(() => {
+    if (!hasImages) return;
     setCurrentSlide((prev) => (prev - 1 + images.length) % images.length);
-  }, [images.length]);
+  }, [hasImages, images.length]);
 
   const handleNextSlide = useCallback(() => {
+    if (!hasImages) return;
     setCurrentSlide((prev) => (prev + 1) % images.length);
-  }, [images.length]);
+  }, [hasImages, images.length]);
 
   return (
     <Section id="gallery" background="gray">
@@ -61,23 +65,25 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
           {/* Main Image Display */}
           <div className="relative w-full aspect-[16/10] md:aspect-[21/9] overflow-hidden rounded-xl shadow-2xl bg-gray-200">
             <AnimatePresence mode="wait">
-              <motion.div
-                key={currentSlide}
-                initial={{ opacity: 0, x: 100 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -100 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="absolute inset-0"
-              >
-                <ImageWrapper
-                  src={images[currentSlide].src}
-                  alt={images[currentSlide].alt}
-                  fill
-                  priority={currentSlide === 0}
-                  objectFit="cover"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1200px"
-                />
-              </motion.div>
+              {hasImages && (
+                <motion.div
+                  key={currentSlide}
+                  initial={{ opacity: 0, x: 100 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -100 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                  className="absolute inset-0"
+                >
+                  <ImageWrapper
+                    src={images[safeIndex].src}
+                    alt={images[safeIndex].alt}
+                    fill
+                    priority={safeIndex === 0}
+                    objectFit="cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1200px"
+                  />
+                </motion.div>
+              )}
             </AnimatePresence>
 
             {/* Navigation Arrows */}
@@ -102,7 +108,7 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
             {/* Image Counter */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 bg-black/70 px-4 py-2 md:px-6 md:py-3 rounded-full backdrop-blur-sm">
               <p className="text-white text-sm md:text-base font-medium">
-                {currentSlide + 1} / {images.length}
+                {hasImages ? `${safeIndex + 1} / ${images.length}` : "0 / 0"}
               </p>
             </div>
           </div>
@@ -119,16 +125,10 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
                     ? "ring-4 ring-primary-500 scale-110 shadow-lg"
                     : "opacity-60 hover:opacity-100 hover:scale-105 shadow-md"
                 }`}
-                aria-label={`Go to image ${index + 1}`}
+                aria-label={`Go to image: ${image.alt}`}
                 aria-current={index === currentSlide ? "true" : undefined}
               >
-                <ImageWrapper
-                  src={image.src}
-                  alt={`Thumbnail ${index + 1}`}
-                  fill
-                  objectFit="cover"
-                  sizes="80px"
-                />
+                <ImageWrapper src={image.src} alt={image.alt} fill objectFit="cover" sizes="80px" />
               </button>
             ))}
 
