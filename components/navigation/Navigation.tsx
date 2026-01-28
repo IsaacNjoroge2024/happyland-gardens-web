@@ -23,7 +23,7 @@ interface NavLink {
  */
 const navLinks: NavLink[] = [
   { label: "Home", href: "/", sectionId: "home" },
-  { label: "Events", href: "/#events", sectionId: "events" },
+  { label: "Events", href: "/events" },
   { label: "About", href: "/#about", sectionId: "about" },
   { label: "Contact", href: "/#contact", sectionId: "contact" },
 ];
@@ -47,41 +47,10 @@ interface NavigationProps {
  * - Scroll-based appearance changes
  * - Keyboard navigation and accessibility features
  */
-/**
- * Get initial scroll state
- */
-const getInitialScrollState = () => {
-  if (typeof window === "undefined") return false;
-  return window.scrollY > 10;
-};
-
-/**
- * Get initial active section based on scroll position
- */
-const getInitialActiveSection = (): string => {
-  if (typeof window === "undefined") return "home";
-
-  const sections = navLinks
-    .filter((link) => link.sectionId)
-    .map((link) => link.sectionId as string);
-
-  for (const sectionId of [...sections].reverse()) {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const rect = element.getBoundingClientRect();
-      if (rect.top <= window.innerHeight / 2) {
-        return sectionId;
-      }
-    }
-  }
-
-  return "home";
-};
-
 export function Navigation({ className }: NavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(getInitialScrollState);
-  const [activeSection, setActiveSection] = useState<string>(getInitialActiveSection);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("home");
 
   // Refs for focus management
   const menuButtonRef = useRef<HTMLButtonElement>(null);
