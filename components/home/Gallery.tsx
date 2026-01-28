@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { HiXMark, HiChevronLeft, HiChevronRight, HiSparkles } from "react-icons/hi2";
+import { HiChevronLeft, HiChevronRight, HiSparkles } from "react-icons/hi2";
 import ImageWrapper from "@/components/ui/ImageWrapper";
 import Section from "@/components/ui/Section";
 import Container from "@/components/ui/Container";
+import { Button } from "@/components/ui/Button";
 import { GalleryImage } from "@/types";
 
 interface GalleryProps {
@@ -13,92 +14,21 @@ interface GalleryProps {
 }
 
 export const Gallery: React.FC<GalleryProps> = ({ images }) => {
-  const [selectedImage, setSelectedImage] = useState<number | null>(null);
-  const [visibleImages, setVisibleImages] = useState<Set<number>>(new Set());
-  const observerRef = useRef<IntersectionObserver | null>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Setup Intersection Observer for lazy loading and animations
-  useEffect(() => {
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = Number(entry.target.getAttribute("data-index"));
-            setVisibleImages((prev) => new Set([...prev, index]));
-          }
-        });
-      },
-      {
-        threshold: 0.1,
-        rootMargin: "50px",
-      }
-    );
-
-    return () => {
-      observerRef.current?.disconnect();
-    };
-  }, []);
-
-  // Keyboard navigation for lightbox
-  useEffect(() => {
-    if (selectedImage === null) return;
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setSelectedImage(null);
-      } else if (e.key === "ArrowRight") {
-        setSelectedImage((prev) => (prev !== null ? (prev + 1) % images.length : 0));
-      } else if (e.key === "ArrowLeft") {
-        setSelectedImage((prev) =>
-          prev !== null ? (prev - 1 + images.length) % images.length : 0
-        );
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedImage, images.length]);
-
-  // Prevent body scroll when lightbox is open
-  useEffect(() => {
-    if (selectedImage !== null) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [selectedImage]);
-
-  const handleImageClick = useCallback((index: number) => {
-    setSelectedImage(index);
-  }, []);
-
-  const handleCloseModal = useCallback(() => {
-    setSelectedImage(null);
-  }, []);
-
-  const handlePrevImage = useCallback(() => {
-    setSelectedImage((prev) => (prev !== null ? (prev - 1 + images.length) % images.length : 0));
+  const handlePrevSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev - 1 + images.length) % images.length);
   }, [images.length]);
 
-  const handleNextImage = useCallback(() => {
-    setSelectedImage((prev) => (prev !== null ? (prev + 1) % images.length : 0));
+  const handleNextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % images.length);
   }, [images.length]);
-
-  const attachObserver = useCallback((element: HTMLDivElement | null) => {
-    if (element && observerRef.current) {
-      observerRef.current.observe(element);
-    }
-  }, []);
 
   return (
     <Section id="gallery" background="gray">
       <Container size="lg">
         {/* Section Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 md:mb-12">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -120,50 +50,94 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
           </motion.p>
         </div>
 
-        {/* Gallery Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-          {images.map((image, index) => (
-            <motion.div
-              key={image.id}
-              ref={(el) => attachObserver(el)}
-              data-index={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={visibleImages.has(index) ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
-              className="group relative aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer"
-              onClick={() => handleImageClick(index)}
-            >
-              <ImageWrapper
-                src={image.src}
-                alt={image.alt}
-                fill
-                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                objectFit="cover"
-                className="transition-transform duration-300 group-hover:scale-110"
-              />
-              {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <span className="text-white text-sm font-medium">View Image</span>
-              </div>
-            </motion.div>
-          ))}
+        {/* Carousel Container */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="relative"
+        >
+          {/* Main Image Display */}
+          <div className="relative w-full aspect-[16/10] md:aspect-[21/9] overflow-hidden rounded-xl shadow-2xl bg-gray-200">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlide}
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -100 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="absolute inset-0"
+              >
+                <ImageWrapper
+                  src={images[currentSlide].src}
+                  alt={images[currentSlide].alt}
+                  fill
+                  priority={currentSlide === 0}
+                  objectFit="cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1200px"
+                />
+              </motion.div>
+            </AnimatePresence>
 
-          {/* Coming Soon Card */}
-          <motion.div
-            ref={(el) => attachObserver(el)}
-            data-index={images.length}
-            initial={{ opacity: 0, y: 20 }}
-            animate={
-              visibleImages.has(images.length) ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
-            }
-            transition={{ duration: 0.5, delay: images.length * 0.05 }}
-            className="relative aspect-square overflow-hidden rounded-lg shadow-md bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center p-6"
-          >
-            <div className="text-center space-y-4">
+            {/* Navigation Arrows */}
+            <button
+              type="button"
+              onClick={handlePrevSlide}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-gray-900 p-3 md:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              aria-label="Previous image"
+            >
+              <HiChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
+            </button>
+
+            <button
+              type="button"
+              onClick={handleNextSlide}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-gray-900 p-3 md:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              aria-label="Next image"
+            >
+              <HiChevronRight className="w-6 h-6 md:w-8 md:h-8" />
+            </button>
+
+            {/* Image Counter */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 bg-black/70 px-4 py-2 md:px-6 md:py-3 rounded-full backdrop-blur-sm">
+              <p className="text-white text-sm md:text-base font-medium">
+                {currentSlide + 1} / {images.length}
+              </p>
+            </div>
+          </div>
+
+          {/* Thumbnail Navigation */}
+          <div className="mt-6 flex gap-3 md:gap-4 justify-center items-center flex-wrap px-4">
+            {images.map((image, index) => (
+              <button
+                key={image.id}
+                type="button"
+                onClick={() => setCurrentSlide(index)}
+                className={`relative w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden transition-all duration-300 ${
+                  index === currentSlide
+                    ? "ring-4 ring-primary-500 scale-110 shadow-lg"
+                    : "opacity-60 hover:opacity-100 hover:scale-105 shadow-md"
+                }`}
+                aria-label={`Go to image ${index + 1}`}
+                aria-current={index === currentSlide ? "true" : undefined}
+              >
+                <ImageWrapper
+                  src={image.src}
+                  alt={`Thumbnail ${index + 1}`}
+                  fill
+                  objectFit="cover"
+                  sizes="80px"
+                />
+              </button>
+            ))}
+
+            {/* Coming Soon Thumbnail */}
+            <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden shadow-md bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
               <motion.div
                 animate={{
-                  y: [0, -10, 0],
-                  rotate: [0, 5, -5, 0],
+                  rotate: [0, 360],
+                  scale: [1, 1.2, 1],
                 }}
                 transition={{
                   duration: 3,
@@ -171,127 +145,26 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
                   ease: "easeInOut",
                 }}
               >
-                <HiSparkles className="w-12 h-12 mx-auto text-yellow-300" />
-              </motion.div>
-              <div>
-                <h3 className="text-xl font-bold text-white mb-2 font-heading">More Coming Soon</h3>
-                <p className="text-white/90 text-sm">
-                  We&apos;re adding more beautiful memories from our events
-                </p>
-              </div>
-              <motion.div
-                className="flex gap-2 justify-center"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-              >
-                {[...Array(3)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="w-2 h-2 bg-white rounded-full"
-                    animate={{
-                      scale: [1, 1.5, 1],
-                      opacity: [0.5, 1, 0.5],
-                    }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      delay: i * 0.2,
-                    }}
-                  />
-                ))}
+                <HiSparkles className="w-6 h-6 md:w-8 md:h-8 text-yellow-300" />
               </motion.div>
             </div>
-          </motion.div>
-        </div>
+          </div>
 
-        {/* Image Count */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center mt-8 text-gray-600"
-        >
-          <p>Viewing {images.length} of many more to come</p>
-        </motion.div>
-      </Container>
-
-      {/* Lightbox Modal */}
-      <AnimatePresence>
-        {selectedImage !== null && (
+          {/* More Coming Soon Message */}
           <motion.div
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
-            onClick={handleCloseModal}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="mt-8 text-center"
           >
-            {/* Close Button */}
-            <button
-              type="button"
-              onClick={handleCloseModal}
-              className="absolute top-4 right-4 z-60 text-white hover:text-gray-300 transition-colors p-2 rounded-full hover:bg-white/10"
-              aria-label="Close lightbox"
-            >
-              <HiXMark className="w-8 h-8" />
-            </button>
-
-            {/* Previous Button */}
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                handlePrevImage();
-              }}
-              className="absolute left-4 z-60 text-white hover:text-gray-300 transition-colors p-2 rounded-full hover:bg-white/10"
-              aria-label="Previous image"
-            >
-              <HiChevronLeft className="w-10 h-10" />
-            </button>
-
-            {/* Next Button */}
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleNextImage();
-              }}
-              className="absolute right-4 z-60 text-white hover:text-gray-300 transition-colors p-2 rounded-full hover:bg-white/10"
-              aria-label="Next image"
-            >
-              <HiChevronRight className="w-10 h-10" />
-            </button>
-
-            {/* Image Container */}
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="relative w-full h-full max-w-7xl max-h-[90vh] mx-4 my-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <ImageWrapper
-                src={images[selectedImage].src}
-                alt={images[selectedImage].alt}
-                fill
-                sizes="100vw"
-                objectFit="contain"
-                priority
-              />
-            </motion.div>
-
-            {/* Image Caption */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-60 bg-black/70 px-6 py-3 rounded-full backdrop-blur-sm">
-              <p className="text-white text-sm">
-                {selectedImage + 1} / {images.length}
-              </p>
-            </div>
+            <p className="text-gray-600 mb-4">More beautiful moments coming soon</p>
+            <Button href="/contact" variant="primary" size="md">
+              Book Your Event
+            </Button>
           </motion.div>
-        )}
-      </AnimatePresence>
+        </motion.div>
+      </Container>
     </Section>
   );
 };
