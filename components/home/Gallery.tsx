@@ -90,7 +90,8 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
             <button
               type="button"
               onClick={handlePrevSlide}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-gray-900 p-3 md:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              disabled={!hasImages}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-gray-900 p-3 md:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               aria-label="Previous image"
             >
               <HiChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
@@ -99,7 +100,8 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
             <button
               type="button"
               onClick={handleNextSlide}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-gray-900 p-3 md:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              disabled={!hasImages}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-gray-900 p-3 md:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               aria-label="Next image"
             >
               <HiChevronRight className="w-6 h-6 md:w-8 md:h-8" />
@@ -121,12 +123,12 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
                 type="button"
                 onClick={() => setCurrentSlide(index)}
                 className={`relative w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden transition-all duration-300 ${
-                  index === currentSlide
+                  index === safeIndex
                     ? "ring-4 ring-primary-500 scale-110 shadow-lg"
                     : "opacity-60 hover:opacity-100 hover:scale-105 shadow-md"
                 }`}
                 aria-label={`Go to image: ${image.alt}`}
-                aria-current={index === currentSlide ? "true" : undefined}
+                aria-current={index === safeIndex ? "true" : undefined}
               >
                 <ImageWrapper src={image.src} alt={image.alt} fill objectFit="cover" sizes="80px" />
               </button>
