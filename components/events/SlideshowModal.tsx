@@ -240,7 +240,7 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
           </div>
 
           {/* Slideshow Area */}
-          <div className="relative flex-1 bg-gray-900 overflow-hidden">
+          <div className="relative flex-1 bg-gray-900 overflow-hidden min-h-[400px] md:min-h-[500px] lg:min-h-[600px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}
