@@ -21,7 +21,7 @@ export const galleryImages: GalleryImage[] = [
   },
   {
     id: "gallery-3",
-    src: "/images/gallery/happyland-gardens-coorporate-tag-of-war-gallery.png",
+    src: "/images/gallery/happyland-gardens-corporate-tug-of-war-gallery.png",
     alt: "Corporate team building tug of war activity",
     category: "All",
     eventType: "Corporate",

@@ -37,7 +37,7 @@ export const eventTypes: EventType[] = [
     description:
       "Host your next corporate event in our professional and inspiring environment. Perfect for conferences, team building activities, product launches, and company celebrations. Modern facilities meet natural beauty.",
     images: [
-      "/images/gallery/happyland-gardens-coorporate-tag-of-war-gallery.png",
+      "/images/gallery/happyland-gardens-corporate-tug-of-war-gallery.png",
       "/images/gallery/happyland-gardens-archery-gallery.png",
       "/images/gallery/happyland-gardens-yoga-class-gallery.png",
       "/images/gallery/happyland-gardens-yoga-class-2-gallery.png",
