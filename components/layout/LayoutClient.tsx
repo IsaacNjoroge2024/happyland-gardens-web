@@ -1,28 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Navigation } from "@/components/navigation";
-import { BookingModal } from "@/components/booking";
+import { useBookingModal } from "@/context";
 
 interface LayoutClientProps {
   children: React.ReactNode;
 }
 
 /**
- * Client-side layout wrapper that manages the booking modal state
- * This component wraps the Navigation and provides modal control to child components
+ * Client-side layout wrapper that connects Navigation to the booking modal context
  */
 export function LayoutClient({ children }: LayoutClientProps) {
-  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
-
-  const openBookingModal = () => setIsBookingModalOpen(true);
-  const closeBookingModal = () => setIsBookingModalOpen(false);
+  const { openBookingModal } = useBookingModal();
 
   return (
     <>
       <Navigation onBookNowClick={openBookingModal} />
       {children}
-      <BookingModal isOpen={isBookingModalOpen} onClose={closeBookingModal} />
     </>
   );
 }

@@ -1,1 +1,1 @@
-export { default as BookingModal } from "./BookingModal";
+export { BookingModal } from "./BookingModal";

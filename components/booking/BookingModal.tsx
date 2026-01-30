@@ -15,13 +15,18 @@ interface BookingModalProps {
   onClose: () => void;
 }
 
-const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
+export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
   const modalRef = useFocusTrap<HTMLDivElement>(isOpen);
+  const firstCardButtonRef = React.useRef<HTMLAnchorElement>(null);
 
-  // Prevent body scroll when modal is open
+  // Prevent body scroll when modal is open and focus first card
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      // Focus the first card button after a short delay to ensure modal is rendered
+      setTimeout(() => {
+        firstCardButtonRef.current?.focus();
+      }, 100);
     } else {
       document.body.style.overflow = "unset";
     }
@@ -46,11 +51,9 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
     };
   }, [isOpen, onClose]);
 
-  // Handle click outside to close
-  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
+  // Handle click on overlay to close
+  const handleOverlayClick = () => {
+    onClose();
   };
 
   // Detect if user is on mobile device
@@ -84,7 +87,6 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
       {isOpen && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          onClick={handleOverlayClick}
           role="dialog"
           aria-modal="true"
           aria-labelledby="booking-modal-title"
@@ -93,6 +95,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
           {/* Overlay */}
           <motion.div
             className="absolute inset-0 bg-black/60"
+            onClick={handleOverlayClick}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -147,6 +150,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
                   </BodyText>
                   <Caption className="mb-4 flex-grow">Speak directly with our team</Caption>
                   <Button
+                    ref={firstCardButtonRef as React.Ref<HTMLAnchorElement>}
                     variant="primary"
                     size="md"
                     href={getPhoneLink(contactInfo.phone)}
@@ -218,5 +222,3 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
     </AnimatePresence>
   );
 };
-
-export default BookingModal;
