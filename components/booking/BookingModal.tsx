@@ -102,15 +102,17 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
             transition={{ duration: 0.2 }}
           />
 
-          {/* Modal Container */}
-          <motion.div
-            ref={modalRef}
-            className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl my-8 mx-auto"
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-          >
+          {/* Flex wrapper for vertical centering */}
+          <div className="flex min-h-full items-center justify-center p-4">
+            {/* Modal Container */}
+            <motion.div
+              ref={modalRef}
+              className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl my-8"
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            >
             {/* Close Button */}
             <button
               onClick={onClose}
@@ -216,7 +218,8 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
                 </Caption>
               </div>
             </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
       )}
     </AnimatePresence>
