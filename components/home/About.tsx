@@ -15,6 +15,7 @@ import Section from "@/components/ui/Section";
 import Container from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { AboutInfo } from "@/types";
+import { useBookingModal } from "@/context";
 
 interface AboutProps {
   data: AboutInfo;
@@ -61,6 +62,8 @@ const features: Feature[] = [
 ];
 
 export const About: React.FC<AboutProps> = ({ data }) => {
+  const { openBookingModal } = useBookingModal();
+
   return (
     <Section id="about" background="white">
       <Container size="lg">
@@ -184,7 +187,7 @@ export const About: React.FC<AboutProps> = ({ data }) => {
           <p className="text-lg text-gray-700 mb-6 max-w-2xl mx-auto">
             Ready to create unforgettable memories at Happyland Gardens?
           </p>
-          <Button href="#contact" variant="primary" size="lg">
+          <Button onClick={openBookingModal} variant="primary" size="lg">
             Contact Us
           </Button>
         </motion.div>

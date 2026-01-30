@@ -154,7 +154,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
                     variant="primary"
                     size="md"
                     href={getPhoneLink(contactInfo.phone)}
-                    className="w-full"
+                    className="w-full bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
                     aria-label={`Call us at ${formatPhoneNumber(contactInfo.phone)}`}
                   >
                     Call Now
@@ -200,7 +200,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
                     href={getMapsLink()}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full bg-accent-600 hover:bg-accent-700 focus:ring-accent-500"
+                    className="w-full bg-orange-600 hover:bg-orange-700 focus:ring-orange-500"
                     aria-label="Get directions to our location"
                   >
                     Get Directions

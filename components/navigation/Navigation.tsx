@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiMenu, HiX } from "react-icons/hi";
+import { FaLeaf } from "react-icons/fa";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
@@ -221,9 +222,10 @@ export function Navigation({ className, onBookNowClick }: NavigationProps) {
             {/* Logo */}
             <Link
               href="/"
-              className="flex items-center gap-2 text-xl font-bold text-primary-600 transition-colors hover:text-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg font-heading"
+              className="flex items-center gap-2 text-xl font-bold text-green-700 transition-colors hover:text-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 rounded-lg font-heading"
               aria-label={`${contactInfo.businessName} - Home`}
             >
+              <FaLeaf className="text-green-600" size={24} />
               {contactInfo.businessName}
             </Link>
 

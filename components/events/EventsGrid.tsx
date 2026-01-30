@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { EventCard } from "./EventCard";
 import { SlideshowModal } from "./SlideshowModal";
 import { EventType } from "@/types";
+import { useBookingModal } from "@/context";
 
 interface EventsGridProps {
   events: EventType[];
@@ -12,6 +13,7 @@ interface EventsGridProps {
 export const EventsGrid: React.FC<EventsGridProps> = ({ events }) => {
   const [selectedEvent, setSelectedEvent] = useState<EventType | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { openBookingModal } = useBookingModal();
 
   const handleEventClick = (event: EventType) => {
     setSelectedEvent(event);
@@ -23,13 +25,8 @@ export const EventsGrid: React.FC<EventsGridProps> = ({ events }) => {
   };
 
   const handleBookClick = () => {
-    // TODO: Open booking modal - will be implemented in future tickets
     setIsModalOpen(false);
-    // Scroll to contact section or open booking form
-    const contactSection = document.getElementById("contact");
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: "smooth" });
-    }
+    openBookingModal();
   };
 
   return (
