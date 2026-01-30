@@ -38,6 +38,7 @@ export const Hero: React.FC<HeroProps> = ({ data, onSecondaryCTAClick }) => {
 
   return (
     <section
+      id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
@@ -82,7 +83,7 @@ export const Hero: React.FC<HeroProps> = ({ data, onSecondaryCTAClick }) => {
 
       {/* Slideshow Indicators */}
       {data.images.length > 1 && (
-        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-20 flex gap-2 [@media(max-height:670px)]:hidden">
           {data.images.map((_, index) => (
             <button
               key={index}

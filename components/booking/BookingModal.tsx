@@ -22,17 +22,17 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
   // Prevent body scroll when modal is open and focus first card
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflowY = "hidden";
       // Focus the first card button after a short delay to ensure modal is rendered
       setTimeout(() => {
         firstCardButtonRef.current?.focus();
       }, 100);
     } else {
-      document.body.style.overflow = "unset";
+      document.body.style.overflowY = "";
     }
 
     return () => {
-      document.body.style.overflow = "unset";
+      document.body.style.overflowY = "";
     };
   }, [isOpen]);
 
@@ -86,7 +86,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
     <AnimatePresence>
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 overflow-y-auto"
           role="dialog"
           aria-modal="true"
           aria-labelledby="booking-modal-title"
@@ -94,7 +94,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
         >
           {/* Overlay */}
           <motion.div
-            className="absolute inset-0 bg-black/60"
+            className="fixed inset-0 bg-black/60"
             onClick={handleOverlayClick}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -105,7 +105,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
           {/* Modal Container */}
           <motion.div
             ref={modalRef}
-            className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden"
+            className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl my-8 mx-auto"
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -115,7 +115,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
             <button
               onClick={onClose}
               className={cn(
-                "absolute top-4 right-4 z-10 p-2 rounded-full",
+                "absolute top-2 right-2 sm:top-4 sm:right-4 z-10 p-3 rounded-full",
                 "bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-800",
                 "transition-colors duration-200",
                 "focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
@@ -126,10 +126,10 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
             </button>
 
             {/* Modal Content */}
-            <div className="p-6 md:p-8 lg:p-10">
+            <div className="p-4 sm:p-6 md:p-8 lg:p-10">
               {/* Header */}
-              <div className="text-center mb-8">
-                <H2 className="text-primary-700 mb-3">
+              <div className="text-center mb-8 max-[376px]:mt-4">
+                <H2 className="text-primary-700 mb-3 max-[361px]:text-2xl">
                   <span id="booking-modal-title">Book Your Event at Happyland Gardens</span>
                 </H2>
                 <Caption className="text-lg text-gray-600">
