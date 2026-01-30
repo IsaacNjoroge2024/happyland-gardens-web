@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiMenu, HiX } from "react-icons/hi";
 import { FaLeaf } from "react-icons/fa";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
-import Container from "@/components/ui/Container";
 import { contactInfo } from "@/data";
 
 /**
@@ -51,6 +51,7 @@ interface NavigationProps {
  * - Keyboard navigation and accessibility features
  */
 export function Navigation({ className, onBookNowClick }: NavigationProps) {
+  const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("home");
@@ -118,13 +119,13 @@ export function Navigation({ className, onBookNowClick }: NavigationProps) {
    */
   useEffect(() => {
     if (isMobileMenuOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflowY = "hidden";
     } else {
-      document.body.style.overflow = "";
+      document.body.style.overflowY = "";
     }
 
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflowY = "";
     };
   }, [isMobileMenuOpen]);
 
@@ -192,7 +193,23 @@ export function Navigation({ className, onBookNowClick }: NavigationProps) {
    * Check if a nav link is currently active
    */
   const isLinkActive = (link: NavLink): boolean => {
-    return link.sectionId === activeSection;
+    // Contact button is a modal trigger, never active
+    if (link.isBookingTrigger) {
+      return false;
+    }
+
+    // Check if we're on the Events page
+    if (link.href === "/events") {
+      return pathname === "/events";
+    }
+
+    // For home page sections, check both pathname and scroll position
+    if (link.href === "/") {
+      return pathname === "/" && activeSection === "home";
+    }
+
+    // For section links (like About), check active section from scroll
+    return link.sectionId === activeSection && pathname === "/";
   };
 
   return (
@@ -213,7 +230,7 @@ export function Navigation({ className, onBookNowClick }: NavigationProps) {
         )}
         role="banner"
       >
-        <Container>
+        <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-[1600px]">
           <nav
             className="flex h-16 items-center justify-between md:h-20"
             role="navigation"
@@ -279,7 +296,7 @@ export function Navigation({ className, onBookNowClick }: NavigationProps) {
               ref={menuButtonRef}
               type="button"
               onClick={toggleMobileMenu}
-              className="flex h-10 w-10 items-center justify-center rounded-lg text-gray-700 transition-colors hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 md:hidden"
+              className="flex h-11 w-11 items-center justify-center rounded-lg text-gray-700 transition-colors hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 md:hidden"
               aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"
@@ -291,7 +308,7 @@ export function Navigation({ className, onBookNowClick }: NavigationProps) {
               )}
             </button>
           </nav>
-        </Container>
+        </div>
       </header>
 
       {/* Mobile Menu Overlay */}
@@ -335,7 +352,7 @@ export function Navigation({ className, onBookNowClick }: NavigationProps) {
                   ref={closeButtonRef}
                   type="button"
                   onClick={closeMobileMenu}
-                  className="flex h-10 w-10 items-center justify-center rounded-lg text-gray-700 transition-colors hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                  className="flex h-11 w-11 items-center justify-center rounded-lg text-gray-700 transition-colors hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
                   aria-label="Close menu"
                 >
                   <HiX className="h-6 w-6" aria-hidden="true" />

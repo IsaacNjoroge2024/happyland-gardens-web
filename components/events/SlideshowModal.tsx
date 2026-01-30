@@ -39,13 +39,13 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
   // Prevent body scroll when modal is open
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflowY = "hidden";
     } else {
-      document.body.style.overflow = "";
+      document.body.style.overflowY = "";
     }
 
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflowY = "";
     };
   }, [isOpen]);
 
@@ -234,7 +234,7 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="p-2 rounded-full hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="p-3 rounded-full hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500"
                 aria-label="Close modal"
               >
                 <HiX className="w-6 h-6 text-gray-600" />

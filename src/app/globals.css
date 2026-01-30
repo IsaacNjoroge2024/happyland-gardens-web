@@ -49,8 +49,13 @@
     border-color: theme('colors.gray.200');
   }
 
+  html {
+    overflow-x: hidden;
+  }
+
   body {
     background-color: theme('colors.white');
     color: theme('colors.gray.900');
+    overflow-x: hidden;
   }
 }
