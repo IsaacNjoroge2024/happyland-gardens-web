@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -31,12 +33,15 @@ const quickLinks: QuickLink[] = [
   { label: "Events", href: "/#events" },
   { label: "About Us", href: "/#about" },
   { label: "Contact", href: "/#contact" },
-  { label: "Privacy Policy", href: "/privacy-policy" },
-  { label: "Terms of Service", href: "/terms-of-service" },
 ];
 
 const Footer: React.FC<FooterProps> = ({ className }) => {
   const currentYear = new Date().getFullYear();
+
+  const handleSocialClick = (e: React.MouseEvent<HTMLAnchorElement>, platform: string) => {
+    e.preventDefault();
+    alert(`${platform} coming soon! Follow us for updates.`);
+  };
 
   return (
     <footer className={cn("bg-primary-900 text-white", className)} role="contentinfo">
@@ -51,39 +56,30 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
 
               {/* Social Media Icons */}
               <div className="flex gap-4 pt-2">
-                {contactInfo.socialMedia.facebook && (
-                  <a
-                    href={contactInfo.socialMedia.facebook}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-md p-1"
-                    aria-label="Visit our Facebook page"
-                  >
-                    <FaFacebook className="h-6 w-6" />
-                  </a>
-                )}
-                {contactInfo.socialMedia.instagram && (
-                  <a
-                    href={contactInfo.socialMedia.instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-md p-1"
-                    aria-label="Visit our Instagram page"
-                  >
-                    <FaInstagram className="h-6 w-6" />
-                  </a>
-                )}
-                {contactInfo.socialMedia.twitter && (
-                  <a
-                    href={contactInfo.socialMedia.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-md p-1"
-                    aria-label="Visit our Twitter page"
-                  >
-                    <FaTwitter className="h-6 w-6" />
-                  </a>
-                )}
+                <a
+                  href="#"
+                  onClick={(e) => handleSocialClick(e, "Facebook")}
+                  className="text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-md p-1"
+                  aria-label="Facebook - Coming Soon"
+                >
+                  <FaFacebook className="h-6 w-6" />
+                </a>
+                <a
+                  href="#"
+                  onClick={(e) => handleSocialClick(e, "Instagram")}
+                  className="text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-md p-1"
+                  aria-label="Instagram - Coming Soon"
+                >
+                  <FaInstagram className="h-6 w-6" />
+                </a>
+                <a
+                  href="#"
+                  onClick={(e) => handleSocialClick(e, "Twitter")}
+                  className="text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-md p-1"
+                  aria-label="Twitter - Coming Soon"
+                >
+                  <FaTwitter className="h-6 w-6" />
+                </a>
               </div>
             </div>
 
@@ -165,7 +161,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                 {/* Address */}
                 <li>
                   <a
-                    href={contactInfo.mapsLink}
+                    href={contactInfo.mapsLinkDesktop || contactInfo.mapsLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-start gap-3 text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-sm"
