@@ -10,10 +10,11 @@ import { cn } from "@/lib/utils";
 
 interface HeroProps {
   data: HeroData;
+  onSecondaryCTAClick?: () => void;
   // TODO: Implement parallax effect based on data.enableParallax flag
 }
 
-export const Hero: React.FC<HeroProps> = ({ data }) => {
+export const Hero: React.FC<HeroProps> = ({ data, onSecondaryCTAClick }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const currentImage = data.images[currentSlide];
@@ -145,7 +146,9 @@ export const Hero: React.FC<HeroProps> = ({ data }) => {
             {data.primaryCta.text}
           </Button>
           <Button
-            href={data.secondaryCta.href}
+            {...(onSecondaryCTAClick
+              ? { onClick: onSecondaryCTAClick }
+              : { href: data.secondaryCta.href })}
             variant="outline"
             size="lg"
             className="w-full sm:w-auto min-w-[200px]"
