@@ -14,6 +14,9 @@ export interface ContactInfo {
     longitude: number;
   };
   mapsLink: string;
+  whatsappLink?: string;
+  mapsLinkMobile?: string;
+  mapsLinkDesktop?: string;
   socialMedia: {
     facebook?: string;
     instagram?: string;

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
-import { Navigation } from "@/components/navigation";
+import { LayoutClient } from "@/components/layout";
+import { BookingModalProvider } from "@/context";
 import Footer from "@/components/footer";
 
 const inter = Inter({
@@ -31,11 +32,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <body className={inter.className}>
-        <Navigation />
-        <main id="main-content" tabIndex={-1}>
-          {children}
-        </main>
-        <Footer />
+        <BookingModalProvider>
+          <LayoutClient>
+            <main id="main-content" tabIndex={-1}>
+              {children}
+            </main>
+            <Footer />
+          </LayoutClient>
+        </BookingModalProvider>
       </body>
     </html>
   );

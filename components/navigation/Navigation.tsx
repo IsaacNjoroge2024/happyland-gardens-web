@@ -16,6 +16,7 @@ interface NavLink {
   label: string;
   href: string;
   sectionId?: string;
+  isBookingTrigger?: boolean;
 }
 
 /**
@@ -25,7 +26,7 @@ const navLinks: NavLink[] = [
   { label: "Home", href: "/", sectionId: "home" },
   { label: "Events", href: "/events" },
   { label: "About", href: "/#about", sectionId: "about" },
-  { label: "Contact", href: "/#contact", sectionId: "contact" },
+  { label: "Contact", href: "#", isBookingTrigger: true },
 ];
 
 /**
@@ -33,6 +34,7 @@ const navLinks: NavLink[] = [
  */
 interface NavigationProps {
   className?: string;
+  onBookNowClick?: () => void;
 }
 
 /**
@@ -47,7 +49,7 @@ interface NavigationProps {
  * - Scroll-based appearance changes
  * - Keyboard navigation and accessibility features
  */
-export function Navigation({ className }: NavigationProps) {
+export function Navigation({ className, onBookNowClick }: NavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("home");
@@ -154,11 +156,18 @@ export function Navigation({ className }: NavigationProps) {
   };
 
   /**
-   * Handle navigation link click with smooth scroll
+   * Handle navigation link click with smooth scroll or booking trigger
    */
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, link: NavLink) => {
     // Close mobile menu
     closeMobileMenu();
+
+    // If this is a booking trigger, open the booking modal
+    if (link.isBookingTrigger) {
+      e.preventDefault();
+      onBookNowClick?.();
+      return;
+    }
 
     // If the link has a section ID and we're on the same page, smooth scroll
     if (link.sectionId) {
@@ -172,11 +181,10 @@ export function Navigation({ className }: NavigationProps) {
 
   /**
    * Handle Book Now button click
-   * Note: Will open booking modal in a future ticket
    */
-  const handleBookNowClick = () => {
+  const handleBookNowClickInternal = () => {
     closeMobileMenu();
-    // TODO: Open booking modal (will be implemented in a future ticket)
+    onBookNowClick?.();
   };
 
   /**
@@ -256,7 +264,7 @@ export function Navigation({ className }: NavigationProps) {
               <Button
                 variant="primary"
                 size="md"
-                onClick={handleBookNowClick}
+                onClick={handleBookNowClickInternal}
                 className="animate-pulse-slow"
                 aria-label="Book your event now"
               >
@@ -372,7 +380,7 @@ export function Navigation({ className }: NavigationProps) {
                   <Button
                     variant="primary"
                     size="lg"
-                    onClick={handleBookNowClick}
+                    onClick={handleBookNowClickInternal}
                     className="w-full animate-pulse-slow"
                     aria-label="Book your event now"
                   >
