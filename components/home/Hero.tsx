@@ -58,7 +58,8 @@ export const Hero: React.FC<HeroProps> = ({ data }) => {
   };
 
   const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
+    if (touchStart === null || touchEnd === null) return;
+    if (data.images.length === 0) return;
     const distance = touchStart - touchEnd;
     if (distance > minSwipeDistance) {
       setCurrentSlide((prev) => (prev + 1) % data.images.length);
