@@ -7,17 +7,21 @@ import ImageWrapper from "@/components/ui/ImageWrapper";
 import { Button } from "@/components/ui/Button";
 import { HeroData } from "@/types";
 import { cn } from "@/lib/utils";
+import { useBookingModal } from "@/context";
 
 interface HeroProps {
   data: HeroData;
-  onSecondaryCTAClick?: () => void;
   // TODO: Implement parallax effect based on data.enableParallax flag
 }
 
-export const Hero: React.FC<HeroProps> = ({ data, onSecondaryCTAClick }) => {
+export const Hero: React.FC<HeroProps> = ({ data }) => {
+  const { openBookingModal } = useBookingModal();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const currentImage = data.images[currentSlide];
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const minSwipeDistance = 50;
 
   const nextSlide = useCallback(() => {
     if (data.images.length === 0) return;
@@ -26,22 +30,53 @@ export const Hero: React.FC<HeroProps> = ({ data, onSecondaryCTAClick }) => {
 
   useEffect(() => {
     if (!isPaused && data.images.length > 1) {
-      const timer = setInterval(nextSlide, data.slideshowInterval);
-      return () => clearInterval(timer);
+      const timer = setTimeout(nextSlide, data.slideshowInterval);
+      return () => clearTimeout(timer);
     }
-  }, [isPaused, nextSlide, data.slideshowInterval, data.images.length]);
+  }, [isPaused, nextSlide, data.slideshowInterval, data.images.length, currentSlide]);
 
   const scrollToContent = () => {
     const mainContent = document.getElementById("main-content");
     mainContent?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handlePointerEnter = (e: React.PointerEvent) => {
+    if (e.pointerType === "mouse") setIsPaused(true);
+  };
+
+  const handlePointerLeave = (e: React.PointerEvent) => {
+    if (e.pointerType === "mouse") setIsPaused(false);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart === null || touchEnd === null) return;
+    if (data.images.length === 0) return;
+    const distance = touchStart - touchEnd;
+    if (distance > minSwipeDistance) {
+      setCurrentSlide((prev) => (prev + 1) % data.images.length);
+    } else if (distance < -minSwipeDistance) {
+      setCurrentSlide((prev) => (prev - 1 + data.images.length) % data.images.length);
+    }
+  };
+
   return (
     <section
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      onPointerEnter={handlePointerEnter}
+      onPointerLeave={handlePointerLeave}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
       aria-label="Hero section"
     >
       {/* Skip to content link for screen readers - must be first for keyboard users */}
@@ -147,9 +182,7 @@ export const Hero: React.FC<HeroProps> = ({ data, onSecondaryCTAClick }) => {
             {data.primaryCta.text}
           </Button>
           <Button
-            {...(onSecondaryCTAClick
-              ? { onClick: onSecondaryCTAClick }
-              : { href: data.secondaryCta.href })}
+            onClick={openBookingModal}
             variant="outline"
             size="lg"
             className="w-full sm:w-auto min-w-[200px]"

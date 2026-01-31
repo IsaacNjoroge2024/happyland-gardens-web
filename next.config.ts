@@ -16,6 +16,11 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
   },
+  compiler: {
+    removeConsole: {
+      exclude: ["error", "warn"],
+    },
+  },
 };
 
 export default nextConfig;

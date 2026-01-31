@@ -1,7 +1,11 @@
 "use client";
 
 import React, { createContext, useContext, useState } from "react";
-import { BookingModal } from "@/components/booking";
+import dynamic from "next/dynamic";
+
+const BookingModal = dynamic(() =>
+  import("@/components/booking").then((module) => ({ default: module.BookingModal }))
+);
 
 interface BookingModalContextType {
   openBookingModal: () => void;
@@ -13,14 +17,18 @@ const BookingModalContext = createContext<BookingModalContextType | undefined>(u
 
 export function BookingModalProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasBeenOpened, setHasBeenOpened] = useState(false);
 
-  const openBookingModal = () => setIsOpen(true);
+  const openBookingModal = () => {
+    setHasBeenOpened(true);
+    setIsOpen(true);
+  };
   const closeBookingModal = () => setIsOpen(false);
 
   return (
     <BookingModalContext.Provider value={{ openBookingModal, closeBookingModal, isOpen }}>
       {children}
-      <BookingModal isOpen={isOpen} onClose={closeBookingModal} />
+      {hasBeenOpened && <BookingModal isOpen={isOpen} onClose={closeBookingModal} />}
     </BookingModalContext.Provider>
   );
 }
