@@ -1,10 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import { EventCard } from "./EventCard";
-import { SlideshowModal } from "./SlideshowModal";
 import { EventType } from "@/types";
 import { useBookingModal } from "@/context";
+
+const SlideshowModal = dynamic(() =>
+  import("./SlideshowModal").then((module) => ({ default: module.SlideshowModal }))
+);
 
 interface EventsGridProps {
   events: EventType[];

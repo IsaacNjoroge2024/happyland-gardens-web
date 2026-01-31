@@ -7,14 +7,15 @@ import ImageWrapper from "@/components/ui/ImageWrapper";
 import { Button } from "@/components/ui/Button";
 import { HeroData } from "@/types";
 import { cn } from "@/lib/utils";
+import { useBookingModal } from "@/context";
 
 interface HeroProps {
   data: HeroData;
-  onSecondaryCTAClick?: () => void;
   // TODO: Implement parallax effect based on data.enableParallax flag
 }
 
-export const Hero: React.FC<HeroProps> = ({ data, onSecondaryCTAClick }) => {
+export const Hero: React.FC<HeroProps> = ({ data }) => {
+  const { openBookingModal } = useBookingModal();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const currentImage = data.images[currentSlide];
@@ -147,9 +148,7 @@ export const Hero: React.FC<HeroProps> = ({ data, onSecondaryCTAClick }) => {
             {data.primaryCta.text}
           </Button>
           <Button
-            {...(onSecondaryCTAClick
-              ? { onClick: onSecondaryCTAClick }
-              : { href: data.secondaryCta.href })}
+            onClick={openBookingModal}
             variant="outline"
             size="lg"
             className="w-full sm:w-auto min-w-[200px]"
