@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { HiMenu, HiX } from "react-icons/hi";
 import { FaLeaf } from "react-icons/fa";
 import { cn } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics";
 import { Button } from "@/components/ui/Button";
 import { contactInfo } from "@/data";
 
@@ -35,7 +36,7 @@ const navLinks: NavLink[] = [
  */
 interface NavigationProps {
   className?: string;
-  onBookNowClick?: () => void;
+  onBookNowClick?: (source?: string) => void;
 }
 
 /**
@@ -164,10 +165,16 @@ export function Navigation({ className, onBookNowClick }: NavigationProps) {
     // Close mobile menu
     closeMobileMenu();
 
+    trackEvent({
+      action: "nav_link_clicked",
+      category: "navigation",
+      label: link.label.toLowerCase(),
+    });
+
     // If this is a booking trigger, open the booking modal
     if (link.isBookingTrigger) {
       e.preventDefault();
-      onBookNowClick?.();
+      onBookNowClick?.("nav");
       return;
     }
 
@@ -186,7 +193,7 @@ export function Navigation({ className, onBookNowClick }: NavigationProps) {
    */
   const handleBookNowClickInternal = () => {
     closeMobileMenu();
-    onBookNowClick?.();
+    onBookNowClick?.("nav");
   };
 
   /**

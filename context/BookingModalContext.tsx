@@ -2,13 +2,14 @@
 
 import React, { createContext, useContext, useState } from "react";
 import dynamic from "next/dynamic";
+import { trackEvent } from "@/lib/analytics";
 
 const BookingModal = dynamic(() =>
   import("@/components/booking").then((module) => ({ default: module.BookingModal }))
 );
 
 interface BookingModalContextType {
-  openBookingModal: () => void;
+  openBookingModal: (source?: string) => void;
   closeBookingModal: () => void;
   isOpen: boolean;
 }
@@ -19,9 +20,16 @@ export function BookingModalProvider({ children }: { children: React.ReactNode }
   const [isOpen, setIsOpen] = useState(false);
   const [hasBeenOpened, setHasBeenOpened] = useState(false);
 
-  const openBookingModal = () => {
+  const openBookingModal = (source?: string) => {
     setHasBeenOpened(true);
     setIsOpen(true);
+    if (source) {
+      trackEvent({
+        action: "booking_modal_opened",
+        category: "booking",
+        label: source,
+      });
+    }
   };
   const closeBookingModal = () => setIsOpen(false);
 

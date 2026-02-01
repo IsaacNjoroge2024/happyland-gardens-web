@@ -182,7 +182,7 @@ export const Hero: React.FC<HeroProps> = ({ data }) => {
             {data.primaryCta.text}
           </Button>
           <Button
-            onClick={openBookingModal}
+            onClick={() => openBookingModal("hero")}
             variant="outline"
             size="lg"
             className="w-full sm:w-auto min-w-[200px]"

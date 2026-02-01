@@ -187,7 +187,7 @@ export const About: React.FC<AboutProps> = ({ data }) => {
           <p className="text-lg text-gray-700 mb-6 max-w-2xl mx-auto">
             Ready to create unforgettable memories at Happyland Gardens?
           </p>
-          <Button onClick={openBookingModal} variant="primary" size="lg">
+          <Button onClick={() => openBookingModal("about")} variant="primary" size="lg">
             Contact Us
           </Button>
         </motion.div>

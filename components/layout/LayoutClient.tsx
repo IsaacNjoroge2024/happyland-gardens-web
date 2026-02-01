@@ -3,6 +3,7 @@
 import React from "react";
 import { Navigation } from "@/components/navigation";
 import { useBookingModal } from "@/context";
+import { useScrollDepth } from "@/hooks/useScrollDepth";
 
 interface LayoutClientProps {
   children: React.ReactNode;
@@ -13,6 +14,7 @@ interface LayoutClientProps {
  */
 export function LayoutClient({ children }: LayoutClientProps) {
   const { openBookingModal } = useBookingModal();
+  useScrollDepth();
 
   return (
     <>

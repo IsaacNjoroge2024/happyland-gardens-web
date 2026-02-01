@@ -6,6 +6,7 @@ import { HiX, HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import ImageWrapper from "@/components/ui/ImageWrapper";
 import { Button } from "@/components/ui/Button";
 import { EventType } from "@/types";
+import { trackEvent } from "@/lib/analytics";
 
 interface SlideshowModalProps {
   isOpen: boolean;
@@ -48,6 +49,17 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
       document.body.style.overflowY = "";
     };
   }, [isOpen]);
+
+  // Track slideshow viewed event
+  useEffect(() => {
+    if (isOpen) {
+      trackEvent({
+        action: "event_slideshow_viewed",
+        category: "events",
+        label: event.name,
+      });
+    }
+  }, [isOpen, event.name]);
 
   // Auto-advance slideshow
   useEffect(() => {
