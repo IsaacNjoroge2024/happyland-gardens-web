@@ -189,14 +189,14 @@ export const About: React.FC<AboutProps> = ({ data }) => {
             <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-6 text-center font-heading">
               Additional Amenities
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl mx-auto max-[376px]:pl-8 pl-15 sm:pl-30">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl mx-auto max-[376px]:pl-8 pl-15 sm:pl-30 list-none">
               {data.amenities.map((amenity, index) => (
-                <div key={index} className="flex items-center gap-3">
+                <li key={index} className="flex items-center gap-3">
                   <HiCheckCircle className="w-5 h-5 text-primary-600 shrink-0" />
                   <span className="text-gray-700">{amenity}</span>
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           </motion.div>
         )}
 
