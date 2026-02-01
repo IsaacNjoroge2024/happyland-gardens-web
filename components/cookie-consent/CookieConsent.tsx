@@ -24,6 +24,9 @@ export function CookieConsent() {
   const handleDecline = () => {
     localStorage.setItem("analytics_consent", "false");
     setStatus("declined");
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("consent", "update", { analytics_storage: "denied" });
+    }
   };
 
   return (
