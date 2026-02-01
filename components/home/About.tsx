@@ -128,7 +128,7 @@ export const About: React.FC<AboutProps> = ({ data }) => {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="relative"
           >
-            <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-2xl">
+            <div className="relative w-full aspect-4/3 rounded-xl overflow-hidden shadow-2xl">
               <ImageWrapper
                 src="/images/events/garden-parties-card.png"
                 alt="Beautiful garden venue with lush greenery"
