@@ -4,6 +4,7 @@ import "./globals.css";
 import { LayoutClient } from "@/components/layout";
 import { BookingModalProvider } from "@/context";
 import Footer from "@/components/footer";
+import { siteMetadata } from "@/data/metadata";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -20,9 +21,33 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Happyland Gardens - Premier Event Venue in Nairobi",
-  description:
-    "Host your dream event at Happyland Gardens. Beautiful outdoor venue perfect for weddings, corporate events, birthdays, and more.",
+  title: siteMetadata.siteName,
+  description: siteMetadata.siteDescription,
+  keywords: siteMetadata.keywords,
+  alternates: {
+    canonical: siteMetadata.siteUrl,
+  },
+  openGraph: {
+    title: siteMetadata.siteName,
+    description: siteMetadata.siteDescription,
+    url: siteMetadata.siteUrl,
+    siteName: siteMetadata.siteName,
+    images: [
+      {
+        url: siteMetadata.ogImage,
+        width: 1200,
+        height: 634,
+        alt: "Happyland Gardens Event Venue",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteMetadata.siteName,
+    description: siteMetadata.siteDescription,
+    images: [siteMetadata.ogImage],
+  },
 };
 
 export default function RootLayout({

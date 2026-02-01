@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://happylandgardens.co.ke/sitemap.xml
