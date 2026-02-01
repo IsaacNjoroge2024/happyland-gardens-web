@@ -33,7 +33,7 @@ export const metadata: Metadata = {
       {
         url: siteMetadata.ogImage,
         width: 1200,
-        height: 630,
+        height: 634,
         alt: "Happyland Gardens Event Venue",
       },
     ],
@@ -45,6 +45,9 @@ export const metadata: Metadata = {
     description:
       "Explore the variety of events we host at Happyland Gardens. Perfect for weddings, corporate events, and celebrations.",
     images: [siteMetadata.ogImage],
+  },
+  alternates: {
+    canonical: `${siteMetadata.siteUrl}/events`,
   },
 };
 

@@ -9,7 +9,7 @@ export const siteMetadata: SiteMetadata = {
   siteDescription:
     "Host your dream event at Happyland Gardens, Nairobi's premier outdoor event venue. Perfect for weddings, corporate events, birthday parties, and more. Beautiful gardens, modern facilities, and exceptional service.",
   siteUrl: "https://happylandgardens.co.ke",
-  ogImage: "/images/og-image.jpg",
+  ogImage: "/images/happyland-gardens-og-image.png",
   keywords: [
     "event venue Nairobi",
     "wedding venue Kenya",
