@@ -21,6 +21,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteMetadata.siteUrl),
   title: siteMetadata.siteName,
   description: siteMetadata.siteDescription,
   keywords: siteMetadata.keywords,
