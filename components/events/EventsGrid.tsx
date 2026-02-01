@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { EventCard } from "./EventCard";
 import { EventType } from "@/types";
 import { useBookingModal } from "@/context";
+import { trackEvent } from "@/lib/analytics";
 
 const SlideshowModal = dynamic(() =>
   import("./SlideshowModal").then((module) => ({ default: module.SlideshowModal }))
@@ -22,6 +23,11 @@ export const EventsGrid: React.FC<EventsGridProps> = ({ events }) => {
   const handleEventClick = (event: EventType) => {
     setSelectedEvent(event);
     setIsModalOpen(true);
+    trackEvent({
+      action: "event_category_clicked",
+      category: "events",
+      label: event.name,
+    });
   };
 
   const handleCloseModal = () => {
@@ -30,7 +36,7 @@ export const EventsGrid: React.FC<EventsGridProps> = ({ events }) => {
 
   const handleBookClick = () => {
     setIsModalOpen(false);
-    openBookingModal();
+    openBookingModal("events");
   };
 
   return (

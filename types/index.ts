@@ -50,6 +50,7 @@ export interface AboutInfo {
   mission: string;
   story: string[];
   highlights: string[];
+  amenities?: string[];
   established?: number;
 }
 

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import { H2, H4, BodyText, Caption } from "@/components/ui/Typography";
 import { cn, formatPhoneNumber, getPhoneLink } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 
 interface BookingModalProps {
@@ -159,6 +160,13 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
                       variant="primary"
                       size="md"
                       href={getPhoneLink(contactInfo.phone)}
+                      onClick={() =>
+                        trackEvent({
+                          action: "booking_method_selected",
+                          category: "booking",
+                          label: "call",
+                        })
+                      }
                       className="w-full bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
                       aria-label={`Call us at ${formatPhoneNumber(contactInfo.phone)}`}
                     >
@@ -182,6 +190,13 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
                       href={getWhatsAppLink()}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() =>
+                        trackEvent({
+                          action: "booking_method_selected",
+                          category: "booking",
+                          label: "whatsapp",
+                        })
+                      }
                       className="w-full bg-green-600 hover:bg-green-700 focus:ring-green-500"
                       aria-label="Open WhatsApp chat"
                     >
@@ -205,6 +220,13 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
                       href={getMapsLink()}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() =>
+                        trackEvent({
+                          action: "booking_method_selected",
+                          category: "booking",
+                          label: "directions",
+                        })
+                      }
                       className="w-full bg-orange-600 hover:bg-orange-700 focus:ring-orange-500"
                       aria-label="Get directions to our location"
                     >

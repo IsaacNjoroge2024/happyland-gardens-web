@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { formatPhoneNumber, getPhoneLink, getEmailLink, getWhatsAppLink } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics";
 import { contactInfo } from "@/data";
 import Container from "@/components/ui/Container";
 import { H4, BodyText, Caption } from "@/components/ui/Typography";
@@ -95,6 +96,13 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                           href={link.href}
                           target="_blank"
                           rel="noopener noreferrer"
+                          onClick={() =>
+                            trackEvent({
+                              action: "footer_link_clicked",
+                              category: "navigation",
+                              label: link.label,
+                            })
+                          }
                           className="text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-sm"
                         >
                           {link.label}
@@ -102,6 +110,13 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                       ) : (
                         <Link
                           href={link.href}
+                          onClick={() =>
+                            trackEvent({
+                              action: "footer_link_clicked",
+                              category: "navigation",
+                              label: link.label,
+                            })
+                          }
                           className="text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-sm"
                         >
                           {link.label}
@@ -121,6 +136,13 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                 <li>
                   <a
                     href={getPhoneLink(contactInfo.phone)}
+                    onClick={() =>
+                      trackEvent({
+                        action: "footer_link_clicked",
+                        category: "navigation",
+                        label: "phone",
+                      })
+                    }
                     className="flex items-center gap-3 text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-sm"
                     aria-label={`Call us at ${formatPhoneNumber(contactInfo.phone)}`}
                   >
@@ -138,6 +160,13 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                     )}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() =>
+                      trackEvent({
+                        action: "footer_link_clicked",
+                        category: "navigation",
+                        label: "whatsapp",
+                      })
+                    }
                     className="flex items-center gap-3 text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-sm"
                     aria-label="Contact us on WhatsApp"
                   >
@@ -150,6 +179,13 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                 <li>
                   <a
                     href={getEmailLink(contactInfo.email)}
+                    onClick={() =>
+                      trackEvent({
+                        action: "footer_link_clicked",
+                        category: "navigation",
+                        label: "email",
+                      })
+                    }
                     className="flex items-center gap-3 text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-sm"
                     aria-label={`Email us at ${contactInfo.email}`}
                   >
@@ -164,6 +200,13 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                     href={contactInfo.mapsLinkDesktop || contactInfo.mapsLink}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() =>
+                      trackEvent({
+                        action: "footer_link_clicked",
+                        category: "navigation",
+                        label: "address",
+                      })
+                    }
                     className="flex items-start gap-3 text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-sm"
                     aria-label={`Find us at ${contactInfo.address}`}
                   >

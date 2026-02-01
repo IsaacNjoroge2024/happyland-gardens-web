@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiChevronLeft, HiChevronRight, HiSparkles } from "react-icons/hi2";
 import ImageWrapper from "@/components/ui/ImageWrapper";
@@ -8,6 +8,7 @@ import Section from "@/components/ui/Section";
 import Container from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { GalleryImage } from "@/types";
+import { trackEvent } from "@/lib/analytics";
 
 interface GalleryProps {
   images: GalleryImage[];
@@ -17,6 +18,21 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const hasImages = images.length > 0;
   const safeIndex = hasImages ? Math.min(currentSlide, images.length - 1) : 0;
+  const isInitialMount = useRef(true);
+
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    if (images.length > 0) {
+      trackEvent({
+        action: "gallery_image_viewed",
+        category: "engagement",
+        label: images[safeIndex].category,
+      });
+    }
+  }, [safeIndex, images]);
 
   const handlePrevSlide = useCallback(() => {
     if (!hasImages) return;
