@@ -9,6 +9,7 @@ import {
   HiSquare3Stack3D,
   HiUserGroup,
   HiAdjustmentsHorizontal,
+  HiCheckCircle,
 } from "react-icons/hi2";
 import ImageWrapper from "@/components/ui/ImageWrapper";
 import Section from "@/components/ui/Section";
@@ -175,6 +176,29 @@ export const About: React.FC<AboutProps> = ({ data }) => {
             ))}
           </div>
         </div>
+
+        {/* Amenities */}
+        {data.amenities && data.amenities.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mb-12 md:mb-16 bg-primary-50 rounded-xl p-6 md:p-8"
+          >
+            <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-6 text-center font-heading">
+              Additional Amenities
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl mx-auto max-[376px]:pl-8 pl-15 sm:pl-30">
+              {data.amenities.map((amenity, index) => (
+                <div key={index} className="flex items-center gap-3">
+                  <HiCheckCircle className="w-5 h-5 text-primary-600 shrink-0" />
+                  <span className="text-gray-700">{amenity}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
 
         {/* Call to Action */}
         <motion.div

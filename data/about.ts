@@ -25,5 +25,13 @@ export const aboutInfo: AboutInfo = {
     "Year-round availability",
     "Convenient location with easy access",
   ],
+  amenities: [
+    "Hostel Accommodations",
+    "Bar & Restaurant",
+    "Wines and Spirits",
+    "Choma Zone",
+    "Aga Khan Clinic",
+    "Car Wash",
+  ],
   established: 2015,
 };
