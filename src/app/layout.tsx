@@ -59,8 +59,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
-      <body className={inter.className}>
+    <html lang="en" className={`${inter.variable} ${poppins.variable}`} suppressHydrationWarning>
+      <body className={inter.className} suppressHydrationWarning>
         {process.env.NEXT_PUBLIC_GA_ID && (
           <>
             <Script
