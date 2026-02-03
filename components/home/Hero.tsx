@@ -46,8 +46,8 @@ export const Hero: React.FC<HeroProps> = ({ data }) => {
   ]);
 
   const scrollToContent = () => {
-    const mainContent = document.getElementById("main-content");
-    mainContent?.scrollIntoView({ behavior: "smooth" });
+    const gallerySection = document.getElementById("gallery");
+    gallerySection?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handlePointerEnter = (e: React.PointerEvent) => {
