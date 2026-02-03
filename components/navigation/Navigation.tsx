@@ -249,7 +249,7 @@ export function Navigation({ className, onBookNowClick }: NavigationProps) {
               className="flex items-center gap-2 text-xl font-bold text-green-700 transition-colors hover:text-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 rounded-lg font-heading"
               aria-label={`${contactInfo.businessName} - Home`}
             >
-              <FaLeaf className="text-green-600" size={24} />
+              <FaLeaf className="text-green-600" size={24} aria-hidden="true" />
               {contactInfo.businessName}
             </Link>
 
@@ -291,7 +291,7 @@ export function Navigation({ className, onBookNowClick }: NavigationProps) {
                 variant="primary"
                 size="md"
                 onClick={handleBookNowClickInternal}
-                className="animate-pulse-slow"
+                className="animate-pulse-slow motion-reduce:animate-none"
                 aria-label="Book your event now"
               >
                 Book Now
@@ -407,7 +407,7 @@ export function Navigation({ className, onBookNowClick }: NavigationProps) {
                     variant="primary"
                     size="lg"
                     onClick={handleBookNowClickInternal}
-                    className="w-full animate-pulse-slow"
+                    className="w-full animate-pulse-slow motion-reduce:animate-none"
                     aria-label="Book your event now"
                   >
                     Book Now
@@ -425,6 +425,7 @@ export function Navigation({ className, onBookNowClick }: NavigationProps) {
                   <a
                     href={`tel:${contactInfo.phone}`}
                     className="mt-1 block text-base font-medium text-primary-600 hover:text-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded"
+                    aria-label={`Call us at ${contactInfo.phone}`}
                   >
                     {contactInfo.phone}
                   </a>

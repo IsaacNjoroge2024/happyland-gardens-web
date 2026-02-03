@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { HiX, HiChevronLeft, HiChevronRight } from "react-icons/hi";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { HiX, HiChevronLeft, HiChevronRight, HiPause, HiPlay } from "react-icons/hi";
 import ImageWrapper from "@/components/ui/ImageWrapper";
 import { Button } from "@/components/ui/Button";
 import { EventType } from "@/types";
@@ -21,6 +21,7 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
   event,
   onBookClick,
 }) => {
+  const prefersReducedMotion = useReducedMotion();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -63,7 +64,7 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
 
   // Auto-advance slideshow
   useEffect(() => {
-    if (!isOpen || !isAutoPlaying || !hasMultipleImages) {
+    if (!isOpen || !isAutoPlaying || !hasMultipleImages || prefersReducedMotion) {
       return;
     }
 
@@ -76,7 +77,7 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
         clearInterval(autoPlayIntervalRef.current);
       }
     };
-  }, [isOpen, isAutoPlaying, images.length, hasMultipleImages]);
+  }, [isOpen, isAutoPlaying, images.length, hasMultipleImages, prefersReducedMotion]);
 
   // Pause auto-play on manual interaction
   const pauseAutoPlay = useCallback(() => {
@@ -84,6 +85,11 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
     if (autoPlayIntervalRef.current) {
       clearInterval(autoPlayIntervalRef.current);
     }
+  }, []);
+
+  // Toggle auto-play on/off
+  const toggleAutoPlay = useCallback(() => {
+    setIsAutoPlaying((prev) => !prev);
   }, []);
 
   // Navigate to previous image
@@ -249,7 +255,7 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
                 className="p-3 rounded-full hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500"
                 aria-label="Close modal"
               >
-                <HiX className="w-6 h-6 text-gray-600" />
+                <HiX className="w-6 h-6 text-gray-600" aria-hidden="true" />
               </button>
             </div>
 
@@ -284,7 +290,7 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
                     className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-gray-900 p-3 md:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 touch-manipulation"
                     aria-label="Previous image"
                   >
-                    <HiChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
+                    <HiChevronLeft className="w-6 h-6 md:w-8 md:h-8" aria-hidden="true" />
                   </button>
 
                   <button
@@ -293,20 +299,24 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
                     className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-gray-900 p-3 md:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 touch-manipulation"
                     aria-label="Next image"
                   >
-                    <HiChevronRight className="w-6 h-6 md:w-8 md:h-8" />
+                    <HiChevronRight className="w-6 h-6 md:w-8 md:h-8" aria-hidden="true" />
                   </button>
                 </>
               )}
 
               {/* Image Counter */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 bg-black/70 px-4 py-2 md:px-6 md:py-3 rounded-full backdrop-blur-sm">
+              <div
+                className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 bg-black/70 px-4 py-2 md:px-6 md:py-3 rounded-full backdrop-blur-sm"
+                aria-live="polite"
+                aria-atomic="true"
+              >
                 <p className="text-white text-sm md:text-base font-medium">
-                  {safeIndex + 1} / {images.length}
+                  Image {safeIndex + 1} of {images.length}
                 </p>
               </div>
             </div>
 
-            {/* Image Indicators (Dots) */}
+            {/* Image Indicators (Dots) and Controls */}
             {hasMultipleImages && (
               <div className="py-4 px-6 bg-white border-t border-gray-200 flex justify-center items-center gap-2 overflow-x-auto">
                 {images.map((_, index) => (
@@ -323,6 +333,20 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
                     aria-current={index === safeIndex ? "true" : undefined}
                   />
                 ))}
+                {!prefersReducedMotion && (
+                  <button
+                    type="button"
+                    onClick={toggleAutoPlay}
+                    className="ml-2 flex items-center justify-center h-6 w-6 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                    aria-label={isAutoPlaying ? "Pause slideshow" : "Play slideshow"}
+                  >
+                    {isAutoPlaying ? (
+                      <HiPause className="w-3 h-3" aria-hidden="true" />
+                    ) : (
+                      <HiPlay className="w-3 h-3" aria-hidden="true" />
+                    )}
+                  </button>
+                )}
               </div>
             )}
 

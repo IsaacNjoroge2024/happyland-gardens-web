@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { HiChevronDown } from "react-icons/hi2";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { HiChevronDown, HiPause, HiPlay } from "react-icons/hi2";
 import ImageWrapper from "@/components/ui/ImageWrapper";
 import { Button } from "@/components/ui/Button";
 import { HeroData } from "@/types";
@@ -16,8 +16,10 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ data }) => {
   const { openBookingModal } = useBookingModal();
+  const prefersReducedMotion = useReducedMotion();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isUserPaused, setIsUserPaused] = useState(false);
   const currentImage = data.images[currentSlide];
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
@@ -29,11 +31,19 @@ export const Hero: React.FC<HeroProps> = ({ data }) => {
   }, [data.images.length]);
 
   useEffect(() => {
-    if (!isPaused && data.images.length > 1) {
+    if (!isPaused && !isUserPaused && !prefersReducedMotion && data.images.length > 1) {
       const timer = setTimeout(nextSlide, data.slideshowInterval);
       return () => clearTimeout(timer);
     }
-  }, [isPaused, nextSlide, data.slideshowInterval, data.images.length, currentSlide]);
+  }, [
+    isPaused,
+    isUserPaused,
+    prefersReducedMotion,
+    nextSlide,
+    data.slideshowInterval,
+    data.images.length,
+    currentSlide,
+  ]);
 
   const scrollToContent = () => {
     const mainContent = document.getElementById("main-content");
@@ -68,6 +78,8 @@ export const Hero: React.FC<HeroProps> = ({ data }) => {
     }
   };
 
+  const togglePause = () => setIsUserPaused((prev) => !prev);
+
   return (
     <section
       id="home"
@@ -79,14 +91,6 @@ export const Hero: React.FC<HeroProps> = ({ data }) => {
       onTouchEnd={handleTouchEnd}
       aria-label="Hero section"
     >
-      {/* Skip to content link for screen readers - must be first for keyboard users */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-primary-600 focus:rounded-lg focus:shadow-lg"
-      >
-        Skip to content
-      </a>
-
       {/* Background Image Slideshow */}
       <div className="absolute inset-0 z-0">
         {currentImage && (
@@ -116,9 +120,9 @@ export const Hero: React.FC<HeroProps> = ({ data }) => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/50" />
       </div>
 
-      {/* Slideshow Indicators */}
+      {/* Slideshow Indicators and Controls */}
       {data.images.length > 1 && (
-        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-20 flex gap-2 [@media(max-height:670px)]:hidden">
+        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-20 flex gap-2 items-center [@media(max-height:670px)]:hidden">
           {data.images.map((_, index) => (
             <button
               key={index}
@@ -132,6 +136,20 @@ export const Hero: React.FC<HeroProps> = ({ data }) => {
               aria-current={index === currentSlide ? "true" : undefined}
             />
           ))}
+          {!prefersReducedMotion && (
+            <button
+              type="button"
+              onClick={togglePause}
+              className="ml-2 flex items-center justify-center h-6 w-6 rounded-full bg-white/70 hover:bg-white text-gray-900 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent"
+              aria-label={isUserPaused ? "Play slideshow" : "Pause slideshow"}
+            >
+              {isUserPaused ? (
+                <HiPlay className="w-3 h-3" aria-hidden="true" />
+              ) : (
+                <HiPause className="w-3 h-3" aria-hidden="true" />
+              )}
+            </button>
+          )}
         </div>
       )}
 
@@ -210,7 +228,7 @@ export const Hero: React.FC<HeroProps> = ({ data }) => {
             ease: "easeInOut",
           }}
         >
-          <HiChevronDown className="w-8 h-8 sm:w-10 sm:h-10" />
+          <HiChevronDown className="w-8 h-8 sm:w-10 sm:h-10" aria-hidden="true" />
         </motion.div>
       </motion.button>
     </section>

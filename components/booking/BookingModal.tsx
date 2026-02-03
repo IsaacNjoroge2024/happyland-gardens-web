@@ -6,7 +6,7 @@ import { FaPhone, FaWhatsapp, FaMapMarkerAlt, FaTimes } from "react-icons/fa";
 import { contactInfo } from "@/data/contact";
 import { Button } from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
-import { H2, H4, BodyText, Caption } from "@/components/ui/Typography";
+import { H2, H3, BodyText, Caption } from "@/components/ui/Typography";
 import { cn, formatPhoneNumber, getPhoneLink } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
@@ -116,6 +116,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
             >
               {/* Close Button */}
               <button
+                type="button"
                 onClick={onClose}
                 className={cn(
                   "absolute top-2 right-2 sm:top-4 sm:right-4 z-10 p-3 rounded-full",
@@ -125,7 +126,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
                 )}
                 aria-label="Close modal"
               >
-                <FaTimes size={20} />
+                <FaTimes size={20} aria-hidden="true" />
               </button>
 
               {/* Modal Content */}
@@ -148,9 +149,9 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
                   {/* Card 1 - Call Us */}
                   <Card hover className="p-6 flex flex-col items-center text-center h-full">
                     <div className="w-16 h-16 mb-4 flex items-center justify-center rounded-full bg-primary-100">
-                      <FaPhone size={32} className="text-primary-600" />
+                      <FaPhone size={32} className="text-primary-600" aria-hidden="true" />
                     </div>
-                    <H4 className="mb-2">Call Us</H4>
+                    <H3 className="mb-2 text-xl lg:text-xl">Call Us</H3>
                     <BodyText className="text-primary-600 font-semibold mb-2">
                       {formatPhoneNumber(contactInfo.phone)}
                     </BodyText>
@@ -177,9 +178,9 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
                   {/* Card 2 - WhatsApp */}
                   <Card hover className="p-6 flex flex-col items-center text-center h-full">
                     <div className="w-16 h-16 mb-4 flex items-center justify-center rounded-full bg-green-100">
-                      <FaWhatsapp size={32} className="text-green-600" />
+                      <FaWhatsapp size={32} className="text-green-600" aria-hidden="true" />
                     </div>
-                    <H4 className="mb-2">WhatsApp Us</H4>
+                    <H3 className="mb-2 text-xl lg:text-xl">WhatsApp Us</H3>
                     <BodyText className="text-green-600 font-semibold mb-2">
                       {formatPhoneNumber(contactInfo.whatsapp)}
                     </BodyText>
@@ -207,9 +208,9 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
                   {/* Card 3 - Visit Us */}
                   <Card hover className="p-6 flex flex-col items-center text-center h-full">
                     <div className="w-16 h-16 mb-4 flex items-center justify-center rounded-full bg-accent-100">
-                      <FaMapMarkerAlt size={32} className="text-accent-600" />
+                      <FaMapMarkerAlt size={32} className="text-accent-600" aria-hidden="true" />
                     </div>
-                    <H4 className="mb-2">Visit Our Location</H4>
+                    <H3 className="mb-2 text-xl lg:text-xl">Visit Our Location</H3>
                     <BodyText className="text-accent-600 font-semibold mb-2">
                       {contactInfo.address}
                     </BodyText>
