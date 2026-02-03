@@ -67,10 +67,8 @@ export default function Home() {
       />
 
       <Hero data={heroData} />
-      <div id="main-content">
-        <Gallery images={galleryImages} />
-        <About data={aboutInfo} />
-      </div>
+      <Gallery images={galleryImages} />
+      <About data={aboutInfo} />
       {/* Additional homepage sections will be added here */}
     </>
   );

@@ -30,33 +30,33 @@ interface Feature {
 
 const features: Feature[] = [
   {
-    icon: <HiSparkles className="w-8 h-8" />,
+    icon: <HiSparkles className="w-8 h-8" aria-hidden="true" />,
     title: "Beautiful Gardens",
     description: "Beautifully landscaped gardens with mature trees and vibrant flowers",
   },
   {
-    icon: <HiUsers className="w-8 h-8" />,
+    icon: <HiUsers className="w-8 h-8" aria-hidden="true" />,
     title: "Flexible Spaces",
     description:
       "Accommodate events from intimate gatherings of 50 to grand celebrations of 500 guests",
   },
   {
-    icon: <HiCalendarDays className="w-8 h-8" />,
+    icon: <HiCalendarDays className="w-8 h-8" aria-hidden="true" />,
     title: "Event Planning",
     description: "Professional event planning and coordination for seamless execution",
   },
   {
-    icon: <HiSquare3Stack3D className="w-8 h-8" />,
+    icon: <HiSquare3Stack3D className="w-8 h-8" aria-hidden="true" />,
     title: "Ample Parking",
     description: "Secure parking facilities for all your guests",
   },
   {
-    icon: <HiUserGroup className="w-8 h-8" />,
+    icon: <HiUserGroup className="w-8 h-8" aria-hidden="true" />,
     title: "Dedicated Staff",
     description: "Experienced and professional staff committed to your event's success",
   },
   {
-    icon: <HiAdjustmentsHorizontal className="w-8 h-8" />,
+    icon: <HiAdjustmentsHorizontal className="w-8 h-8" aria-hidden="true" />,
     title: "Custom Packages",
     description: "Customizable event packages tailored to your specific needs",
   },
@@ -137,9 +137,15 @@ export const About: React.FC<AboutProps> = ({ data }) => {
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
-            {/* Decorative element */}
-            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary-500 rounded-xl -z-10 hidden lg:block" />
-            <div className="absolute -top-6 -left-6 w-24 h-24 bg-accent-400 rounded-xl -z-10 hidden lg:block" />
+            {/* Decorative elements */}
+            <div
+              className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary-500 rounded-xl -z-10 hidden lg:block"
+              aria-hidden="true"
+            />
+            <div
+              className="absolute -top-6 -left-6 w-24 h-24 bg-accent-400 rounded-xl -z-10 hidden lg:block"
+              aria-hidden="true"
+            />
           </motion.div>
         </div>
 
@@ -192,7 +198,7 @@ export const About: React.FC<AboutProps> = ({ data }) => {
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl mx-auto max-[376px]:pl-8 pl-15 sm:pl-30 list-none">
               {data.amenities.map((amenity, index) => (
                 <li key={index} className="flex items-center gap-3">
-                  <HiCheckCircle className="w-5 h-5 text-primary-600 shrink-0" />
+                  <HiCheckCircle className="w-5 h-5 text-primary-600 shrink-0" aria-hidden="true" />
                   <span className="text-gray-700">{amenity}</span>
                 </li>
               ))}

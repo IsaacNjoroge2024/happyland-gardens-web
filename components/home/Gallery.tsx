@@ -44,6 +44,19 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
     setCurrentSlide((prev) => (prev + 1) % images.length);
   }, [hasImages, images.length]);
 
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        handlePrevSlide();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        handleNextSlide();
+      }
+    },
+    [handlePrevSlide, handleNextSlide]
+  );
+
   return (
     <Section id="gallery" background="gray">
       <Container size="lg">
@@ -77,6 +90,9 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="relative"
+          role="region"
+          aria-label="Photo gallery carousel"
+          onKeyDown={handleKeyDown}
         >
           {/* Main Image Display */}
           <div className="relative w-full aspect-[16/10] md:aspect-[21/9] overflow-hidden rounded-xl shadow-2xl bg-gray-200">
@@ -110,7 +126,7 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
               className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-gray-900 p-3 md:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               aria-label="Previous image"
             >
-              <HiChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
+              <HiChevronLeft className="w-6 h-6 md:w-8 md:h-8" aria-hidden="true" />
             </button>
 
             <button
@@ -120,13 +136,17 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
               className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-gray-900 p-3 md:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               aria-label="Next image"
             >
-              <HiChevronRight className="w-6 h-6 md:w-8 md:h-8" />
+              <HiChevronRight className="w-6 h-6 md:w-8 md:h-8" aria-hidden="true" />
             </button>
 
             {/* Image Counter */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 bg-black/70 px-4 py-2 md:px-6 md:py-3 rounded-full backdrop-blur-sm">
+            <div
+              className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 bg-black/70 px-4 py-2 md:px-6 md:py-3 rounded-full backdrop-blur-sm"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               <p className="text-white text-sm md:text-base font-medium">
-                {hasImages ? `${safeIndex + 1} / ${images.length}` : "0 / 0"}
+                {hasImages ? `Image ${safeIndex + 1} of ${images.length}` : "0 / 0"}
               </p>
             </div>
           </div>
@@ -146,12 +166,15 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
                 aria-label={`Go to image: ${image.alt}`}
                 aria-current={index === safeIndex ? "true" : undefined}
               >
-                <ImageWrapper src={image.src} alt={image.alt} fill objectFit="cover" sizes="80px" />
+                <ImageWrapper src={image.src} alt="" fill objectFit="cover" sizes="80px" />
               </button>
             ))}
 
             {/* Coming Soon Thumbnail */}
-            <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden shadow-md bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
+            <div
+              className="relative w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden shadow-md bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center"
+              aria-hidden="true"
+            >
               <motion.div
                 animate={{
                   rotate: [0, 360],

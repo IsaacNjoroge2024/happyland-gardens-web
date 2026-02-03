@@ -34,13 +34,13 @@ const quickLinks: QuickLink[] = [
   { label: "Events", href: "/#events" },
   { label: "About Us", href: "/#about" },
   { label: "Contact", href: "/#contact" },
+  { label: "Accessibility", href: "/accessibility" },
 ];
 
 const Footer: React.FC<FooterProps> = ({ className }) => {
   const currentYear = new Date().getFullYear();
 
-  const handleSocialClick = (e: React.MouseEvent<HTMLAnchorElement>, platform: string) => {
-    e.preventDefault();
+  const handleSocialClick = (platform: string) => {
     alert(`${platform} coming soon! Follow us for updates.`);
   };
 
@@ -57,30 +57,30 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
 
               {/* Social Media Icons */}
               <div className="flex gap-4 pt-2">
-                <a
-                  href="#"
-                  onClick={(e) => handleSocialClick(e, "Facebook")}
+                <button
+                  type="button"
+                  onClick={() => handleSocialClick("Facebook")}
                   className="text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-md p-1"
                   aria-label="Facebook - Coming Soon"
                 >
-                  <FaFacebook className="h-6 w-6" />
-                </a>
-                <a
-                  href="#"
-                  onClick={(e) => handleSocialClick(e, "Instagram")}
+                  <FaFacebook className="h-6 w-6" aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSocialClick("Instagram")}
                   className="text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-md p-1"
                   aria-label="Instagram - Coming Soon"
                 >
-                  <FaInstagram className="h-6 w-6" />
-                </a>
-                <a
-                  href="#"
-                  onClick={(e) => handleSocialClick(e, "Twitter")}
+                  <FaInstagram className="h-6 w-6" aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSocialClick("Twitter")}
                   className="text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-md p-1"
                   aria-label="Twitter - Coming Soon"
                 >
-                  <FaTwitter className="h-6 w-6" />
-                </a>
+                  <FaTwitter className="h-6 w-6" aria-hidden="true" />
+                </button>
               </div>
             </div>
 
@@ -146,7 +146,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                     className="flex items-center gap-3 text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-sm"
                     aria-label={`Call us at ${formatPhoneNumber(contactInfo.phone)}`}
                   >
-                    <FaPhone className="h-4 w-4 flex-shrink-0" />
+                    <FaPhone className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
                     <span>{formatPhoneNumber(contactInfo.phone)}</span>
                   </a>
                 </li>
@@ -170,7 +170,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                     className="flex items-center gap-3 text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-sm"
                     aria-label="Contact us on WhatsApp"
                   >
-                    <FaWhatsapp className="h-4 w-4 flex-shrink-0" />
+                    <FaWhatsapp className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
                     <span>WhatsApp</span>
                   </a>
                 </li>
@@ -189,7 +189,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                     className="flex items-center gap-3 text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-sm"
                     aria-label={`Email us at ${contactInfo.email}`}
                   >
-                    <FaEnvelope className="h-4 w-4 flex-shrink-0" />
+                    <FaEnvelope className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
                     <span>{contactInfo.email}</span>
                   </a>
                 </li>
@@ -210,7 +210,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                     className="flex items-start gap-3 text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-sm"
                     aria-label={`Find us at ${contactInfo.address}`}
                   >
-                    <FaMapMarkerAlt className="h-4 w-4 flex-shrink-0 mt-1" />
+                    <FaMapMarkerAlt className="h-4 w-4 flex-shrink-0 mt-1" aria-hidden="true" />
                     <span>{contactInfo.address}</span>
                   </a>
                 </li>
@@ -222,14 +222,14 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
               <H4 className="text-white">Business Hours</H4>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3 text-primary-200">
-                  <FaClock className="h-4 w-4 flex-shrink-0 mt-1" />
+                  <FaClock className="h-4 w-4 flex-shrink-0 mt-1" aria-hidden="true" />
                   <div>
                     <p className="font-medium text-white">Weekdays</p>
                     <p>{contactInfo.businessHours.weekdays}</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3 text-primary-200">
-                  <FaClock className="h-4 w-4 flex-shrink-0 mt-1" />
+                  <FaClock className="h-4 w-4 flex-shrink-0 mt-1" aria-hidden="true" />
                   <div>
                     <p className="font-medium text-white">Weekends</p>
                     <p>{contactInfo.businessHours.weekends}</p>
@@ -237,7 +237,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                 </li>
                 {contactInfo.businessHours.holidays && (
                   <li className="flex items-start gap-3 text-primary-200">
-                    <FaClock className="h-4 w-4 flex-shrink-0 mt-1" />
+                    <FaClock className="h-4 w-4 flex-shrink-0 mt-1" aria-hidden="true" />
                     <div>
                       <p className="font-medium text-white">Holidays</p>
                       <p>{contactInfo.businessHours.holidays}</p>

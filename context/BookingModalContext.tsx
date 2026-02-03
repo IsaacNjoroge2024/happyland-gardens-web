@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState } from "react";
 import dynamic from "next/dynamic";
+import { MotionConfig } from "framer-motion";
 import { trackEvent } from "@/lib/analytics";
 
 const BookingModal = dynamic(() =>
@@ -35,8 +36,10 @@ export function BookingModalProvider({ children }: { children: React.ReactNode }
 
   return (
     <BookingModalContext.Provider value={{ openBookingModal, closeBookingModal, isOpen }}>
-      {children}
-      {hasBeenOpened && <BookingModal isOpen={isOpen} onClose={closeBookingModal} />}
+      <MotionConfig reducedMotion="user">
+        {children}
+        {hasBeenOpened && <BookingModal isOpen={isOpen} onClose={closeBookingModal} />}
+      </MotionConfig>
     </BookingModalContext.Provider>
   );
 }
