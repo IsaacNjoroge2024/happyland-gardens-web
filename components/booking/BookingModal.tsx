@@ -10,6 +10,7 @@ import { H2, H3, BodyText, Caption } from "@/components/ui/Typography";
 import { cn, formatPhoneNumber, getPhoneLink } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
+import { useToast } from "@/context";
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -19,6 +20,7 @@ interface BookingModalProps {
 export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
   const modalRef = useFocusTrap<HTMLDivElement>(isOpen);
   const firstCardButtonRef = React.useRef<HTMLAnchorElement>(null);
+  const { showToast } = useToast();
 
   // Prevent body scroll when modal is open and focus first card
   useEffect(() => {
@@ -161,13 +163,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
                       variant="primary"
                       size="md"
                       href={getPhoneLink(contactInfo.phone)}
-                      onClick={() =>
+                      onClick={() => {
+                        showToast("Opening phone dialer...", "info");
                         trackEvent({
                           action: "booking_method_selected",
                           category: "booking",
                           label: "call",
-                        })
-                      }
+                        });
+                      }}
                       className="w-full bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
                       aria-label={`Call us at ${formatPhoneNumber(contactInfo.phone)}`}
                     >
@@ -191,13 +194,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
                       href={getWhatsAppLink()}
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={() =>
+                      onClick={() => {
+                        showToast("Opening WhatsApp...", "info");
                         trackEvent({
                           action: "booking_method_selected",
                           category: "booking",
                           label: "whatsapp",
-                        })
-                      }
+                        });
+                      }}
                       className="w-full bg-green-600 hover:bg-green-700 focus:ring-green-500"
                       aria-label="Open WhatsApp chat"
                     >
@@ -221,13 +225,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
                       href={getMapsLink()}
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={() =>
+                      onClick={() => {
+                        showToast("Loading directions...", "info");
                         trackEvent({
                           action: "booking_method_selected",
                           category: "booking",
                           label: "directions",
-                        })
-                      }
+                        });
+                      }}
                       className="w-full bg-orange-600 hover:bg-orange-700 focus:ring-orange-500"
                       aria-label="Get directions to our location"
                     >
