@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { formatPhoneNumber, getPhoneLink, getEmailLink, getWhatsAppLink } from "@/lib/utils";
+import { formatPhoneNumber, getPhoneLink, getWhatsAppLink } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
 import { contactInfo } from "@/data";
 import { useToast, useBookingModal } from "@/context";
@@ -12,7 +12,6 @@ import { H4, BodyText, Caption } from "@/components/ui/Typography";
 import {
   FaPhone,
   FaWhatsapp,
-  FaEnvelope,
   FaMapMarkerAlt,
   FaFacebook,
   FaInstagram,
@@ -191,25 +190,6 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                   >
                     <FaWhatsapp className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
                     <span>WhatsApp</span>
-                  </a>
-                </li>
-
-                {/* Email */}
-                <li>
-                  <a
-                    href={getEmailLink(contactInfo.email)}
-                    onClick={() =>
-                      trackEvent({
-                        action: "footer_link_clicked",
-                        category: "navigation",
-                        label: "email",
-                      })
-                    }
-                    className="flex items-center gap-3 text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-sm"
-                    aria-label={`Email us at ${contactInfo.email}`}
-                  >
-                    <FaEnvelope className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
-                    <span>{contactInfo.email}</span>
                   </a>
                 </li>
 
