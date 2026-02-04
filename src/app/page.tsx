@@ -37,7 +37,7 @@ export default function Home() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": ["EventVenue", "LocalBusiness"],
-    name: "Happyland Gardens",
+    name: contactInfo.businessName,
     description: siteMetadata.siteDescription,
     address: {
       "@type": "PostalAddress",

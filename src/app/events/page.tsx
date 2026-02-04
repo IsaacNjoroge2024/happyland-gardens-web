@@ -4,7 +4,7 @@ import { EventsGrid } from "@/components/events";
 import Section from "@/components/ui/Section";
 import Container from "@/components/ui/Container";
 import ImageWrapper from "@/components/ui/ImageWrapper";
-import { eventTypes } from "@/data";
+import { eventTypes, contactInfo } from "@/data";
 import { siteMetadata } from "@/data/metadata";
 
 export const metadata: Metadata = {
@@ -56,8 +56,8 @@ export default function EventsPage() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Event Types at Happyland Gardens",
-    description: "Types of events hosted at Happyland Gardens event venue",
+    name: `Event Types at ${contactInfo.businessName}`,
+    description: `Types of events hosted at ${contactInfo.businessName} event venue`,
     itemListElement: eventTypes.map((event, index) => ({
       "@type": "ListItem",
       position: index + 1,
@@ -67,7 +67,7 @@ export default function EventsPage() {
         description: event.description,
         location: {
           "@type": "Place",
-          name: "Happyland Gardens",
+          name: contactInfo.businessName,
           address: {
             "@type": "PostalAddress",
             addressCountry: "KE",
@@ -77,7 +77,7 @@ export default function EventsPage() {
         eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
         organizer: {
           "@type": "Organization",
-          name: "Happyland Gardens",
+          name: contactInfo.businessName,
           url: siteMetadata.siteUrl,
         },
       },

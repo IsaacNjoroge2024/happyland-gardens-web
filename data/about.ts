@@ -34,4 +34,37 @@ export const aboutInfo: AboutInfo = {
     "Car Wash",
   ],
   established: 2015,
+  features: [
+    {
+      icon: "HiSparkles",
+      title: "Beautiful Gardens",
+      description: "Beautifully landscaped gardens with mature trees and vibrant flowers",
+    },
+    {
+      icon: "HiUsers",
+      title: "Flexible Spaces",
+      description:
+        "Accommodate events from intimate gatherings of 50 to grand celebrations of 500 guests",
+    },
+    {
+      icon: "HiCalendarDays",
+      title: "Event Planning",
+      description: "Professional event planning and coordination for seamless execution",
+    },
+    {
+      icon: "HiSquare3Stack3D",
+      title: "Ample Parking",
+      description: "Secure parking facilities for all your guests",
+    },
+    {
+      icon: "HiUserGroup",
+      title: "Dedicated Staff",
+      description: "Experienced and professional staff committed to your event's success",
+    },
+    {
+      icon: "HiAdjustmentsHorizontal",
+      title: "Custom Packages",
+      description: "Customizable event packages tailored to your specific needs",
+    },
+  ],
 };

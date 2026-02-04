@@ -44,6 +44,15 @@ export interface EventType {
 }
 
 /**
+ * Feature item for the About section
+ */
+export interface FeatureItem {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+/**
  * About us information interface
  */
 export interface AboutInfo {
@@ -52,6 +61,7 @@ export interface AboutInfo {
   highlights: string[];
   amenities?: string[];
   established?: number;
+  features?: FeatureItem[];
 }
 
 /**
