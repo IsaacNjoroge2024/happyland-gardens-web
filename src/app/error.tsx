@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { contactInfo } from "@/data";
 import { formatPhoneNumber } from "@/lib/utils";
 
-export default function Error({
+export default function ErrorPage({
   error,
   reset,
 }: {

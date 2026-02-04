@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { formatPhoneNumber, getPhoneLink, getEmailLink, getWhatsAppLink } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
 import { contactInfo } from "@/data";
-import { useToast } from "@/context";
+import { useToast, useBookingModal } from "@/context";
 import Container from "@/components/ui/Container";
 import { H4, BodyText, Caption } from "@/components/ui/Typography";
 import {
@@ -28,19 +28,21 @@ interface QuickLink {
   label: string;
   href: string;
   external?: boolean;
+  isBookingTrigger?: boolean;
 }
 
 const quickLinks: QuickLink[] = [
   { label: "Home", href: "/" },
   { label: "Events", href: "/#events" },
   { label: "About Us", href: "/#about" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Contact", href: "/#contact", isBookingTrigger: true },
   { label: "Accessibility", href: "/accessibility" },
 ];
 
 const Footer: React.FC<FooterProps> = ({ className }) => {
   const currentYear = new Date().getFullYear();
   const { showToast } = useToast();
+  const { openBookingModal } = useBookingModal();
 
   const handleSocialClick = (platform: string) => {
     showToast(`${platform} coming soon! Follow us for updates.`, "info");
@@ -93,7 +95,22 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                 <ul className="space-y-3">
                   {quickLinks.map((link) => (
                     <li key={link.href}>
-                      {link.external ? (
+                      {link.isBookingTrigger ? (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            openBookingModal("footer");
+                            trackEvent({
+                              action: "footer_link_clicked",
+                              category: "navigation",
+                              label: link.label,
+                            });
+                          }}
+                          className="text-primary-200 transition-colors duration-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 focus:ring-offset-primary-900 rounded-sm"
+                        >
+                          {link.label}
+                        </button>
+                      ) : link.external ? (
                         <a
                           href={link.href}
                           target="_blank"

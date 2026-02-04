@@ -6,7 +6,6 @@ import { HiChevronLeft, HiChevronRight, HiSparkles } from "react-icons/hi2";
 import ImageWrapper from "@/components/ui/ImageWrapper";
 import Section from "@/components/ui/Section";
 import Container from "@/components/ui/Container";
-import { Button } from "@/components/ui/Button";
 import { GalleryImage } from "@/types";
 import { trackEvent } from "@/lib/analytics";
 
@@ -207,10 +206,7 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="mt-8 text-center"
           >
-            <p className="text-gray-600 mb-4">More beautiful moments coming soon</p>
-            <Button href="/contact" variant="primary" size="md">
-              Book Your Event
-            </Button>
+            <p className="text-gray-600">More beautiful moments coming soon</p>
           </motion.div>
         </motion.div>
       </Container>
