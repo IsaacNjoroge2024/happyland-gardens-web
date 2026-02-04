@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { formatPhoneNumber, getPhoneLink, getEmailLink, getWhatsAppLink } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
 import { contactInfo } from "@/data";
+import { useToast } from "@/context";
 import Container from "@/components/ui/Container";
 import { H4, BodyText, Caption } from "@/components/ui/Typography";
 import {
@@ -39,9 +40,10 @@ const quickLinks: QuickLink[] = [
 
 const Footer: React.FC<FooterProps> = ({ className }) => {
   const currentYear = new Date().getFullYear();
+  const { showToast } = useToast();
 
   const handleSocialClick = (platform: string) => {
-    alert(`${platform} coming soon! Follow us for updates.`);
+    showToast(`${platform} coming soon! Follow us for updates.`, "info");
   };
 
   return (

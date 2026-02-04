@@ -3,9 +3,10 @@ import { Inter, Poppins } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { LayoutClient } from "@/components/layout";
-import { BookingModalProvider } from "@/context";
+import { BookingModalProvider, ToastProvider } from "@/context";
 import Footer from "@/components/footer";
 import { CookieConsent } from "@/components/cookie-consent";
+import { OfflineBanner } from "@/components/ui/OfflineBanner";
 import { siteMetadata } from "@/data/metadata";
 
 const inter = Inter({
@@ -85,15 +86,18 @@ export default function RootLayout({
             />
           </>
         )}
-        <BookingModalProvider>
-          <LayoutClient>
-            <main id="main-content" tabIndex={-1}>
-              {children}
-            </main>
-            <Footer />
-          </LayoutClient>
-        </BookingModalProvider>
+        <ToastProvider>
+          <BookingModalProvider>
+            <LayoutClient>
+              <main id="main-content" tabIndex={-1}>
+                {children}
+              </main>
+              <Footer />
+            </LayoutClient>
+          </BookingModalProvider>
+        </ToastProvider>
         <CookieConsent />
+        <OfflineBanner />
       </body>
     </html>
   );

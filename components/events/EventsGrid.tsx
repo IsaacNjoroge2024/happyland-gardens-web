@@ -39,6 +39,15 @@ export const EventsGrid: React.FC<EventsGridProps> = ({ events }) => {
     openBookingModal("events");
   };
 
+  if (events.length === 0) {
+    return (
+      <div className="text-center py-16">
+        <p className="text-lg text-gray-600 mb-2">No events available at this time.</p>
+        <p className="text-gray-500">Please check back soon or contact us for assistance.</p>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">

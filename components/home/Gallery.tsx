@@ -118,6 +118,14 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
               )}
             </AnimatePresence>
 
+            {/* Empty State */}
+            {!hasImages && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-8">
+                <p className="text-gray-500 text-lg font-medium">No gallery images available</p>
+                <p className="text-gray-400 text-sm">Check back soon for photos from our events</p>
+              </div>
+            )}
+
             {/* Navigation Arrows */}
             <button
               type="button"
