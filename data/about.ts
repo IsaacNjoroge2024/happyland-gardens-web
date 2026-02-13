@@ -26,7 +26,7 @@ export const aboutInfo: AboutInfo = {
     "Convenient location with easy access",
   ],
   amenities: [
-    "Hostel Accommodations",
+    "Guest Room Accommodations",
     "Bar & Restaurant",
     "Wines and Spirits",
     "Choma Zone",

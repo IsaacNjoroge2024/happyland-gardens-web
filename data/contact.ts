@@ -25,8 +25,8 @@ export const contactInfo: ContactInfo = {
     twitter: "https://twitter.com/happylandgardens",
   },
   businessHours: {
-    weekdays: "9:00 AM - 6:00 PM",
-    weekends: "8:00 AM - 8:00 PM",
-    holidays: "By appointment only",
+    weekdays: "8:00 AM till late",
+    weekends: "8:00 AM till late",
+    holidays: "8:00 AM till late",
   },
 };
