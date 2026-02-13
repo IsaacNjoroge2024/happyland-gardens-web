@@ -22,6 +22,12 @@ interface AboutProps {
   data: AboutInfo;
 }
 
+/**
+ * Icon mapping for feature cards in data/about.ts
+ * Valid icon keys: HiSparkles, HiUsers, HiCalendarDays, HiSquare3Stack3D,
+ * HiUserGroup, HiAdjustmentsHorizontal
+ * Falls back to HiSparkles if icon key not found
+ */
 const iconMap: Record<string, React.ReactNode> = {
   HiSparkles: <HiSparkles className="w-8 h-8" aria-hidden="true" />,
   HiUsers: <HiUsers className="w-8 h-8" aria-hidden="true" />,
@@ -142,7 +148,7 @@ export const About: React.FC<AboutProps> = ({ data }) => {
                   className="bg-white border border-gray-200 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
                 >
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-lg bg-primary-100 text-primary-600 mb-4">
-                    {iconMap[feature.icon]}
+                    {iconMap[feature.icon] ?? <HiSparkles className="w-8 h-8" aria-hidden="true" />}
                   </div>
                   <h4 className="text-xl font-semibold text-gray-900 mb-2 font-heading">
                     {feature.title}

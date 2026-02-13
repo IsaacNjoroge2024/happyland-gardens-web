@@ -17,6 +17,8 @@ interface BookingModalProps {
   onClose: () => void;
 }
 
+const WHATSAPP_BOOKING_MESSAGE = "Hi! I'm interested in booking Happyland Gardens for an event.";
+
 export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
   const modalRef = useFocusTrap<HTMLDivElement>(isOpen);
   const firstCardButtonRef = React.useRef<HTMLAnchorElement>(null);
@@ -180,7 +182,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
                     <Button
                       variant="primary"
                       size="md"
-                      href={getWhatsAppLink(contactInfo.whatsapp, "Hi! I'm interested in booking Happyland Gardens for an event.")}
+                      href={getWhatsAppLink(contactInfo.whatsapp, WHATSAPP_BOOKING_MESSAGE)}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => {

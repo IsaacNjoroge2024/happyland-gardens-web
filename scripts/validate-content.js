@@ -36,6 +36,8 @@ function pass(msg) {
 
 /**
  * Extract image paths (e.g. "/images/...") from all .ts files in the data directory.
+ * Note: Only matches single/double-quoted strings, not template literals.
+ * This is sufficient for static data files but won't catch backtick paths like `/images/...`
  */
 function extractImagePaths() {
   const results = [];
@@ -84,6 +86,9 @@ function extractPhones() {
 
 /**
  * Check that required fields are present in the relevant data files.
+ * Note: Uses substring matching (includes), not structural parsing.
+ * This works for current field names which are distinct, but could match
+ * field names in comments or similar strings.
  */
 function checkRequiredFields() {
   const checks = [
