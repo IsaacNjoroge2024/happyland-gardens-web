@@ -11,7 +11,7 @@ interface EventCardProps {
 }
 
 export const EventCard: React.FC<EventCardProps> = ({ event, onClick }) => {
-  const featuredImage = event.images[0] || "/images/events/garden-parties-card.png";
+  const featuredImage = event.images[0] || "/images/hero/garden-parties-card.png";
   const isInteractive = Boolean(onClick);
 
   return (

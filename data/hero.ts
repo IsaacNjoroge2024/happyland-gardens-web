@@ -19,23 +19,23 @@ export const heroData: HeroData = {
   },
   images: [
     {
-      src: "/images/events/wedding-card.png",
+      src: "/images/hero/wedding-card.png",
       alt: "Beautiful wedding celebration at Happyland Gardens",
     },
     {
-      src: "/images/events/coorporate-event-card.png",
+      src: "/images/hero/coorporate-event-card.png",
       alt: "Corporate event setup in scenic garden setting",
     },
     {
-      src: "/images/events/birthday-card.png",
+      src: "/images/hero/birthday-card.png",
       alt: "Vibrant birthday party celebration at our venue",
     },
     {
-      src: "/images/events/garden-parties-card.png",
+      src: "/images/hero/garden-parties-card.png",
       alt: "Elegant garden party with stunning outdoor setup",
     },
     {
-      src: "/images/events/engagment-parties-card.png",
+      src: "/images/hero/engagment-parties-card.png",
       alt: "Romantic engagement party in our beautiful gardens",
     },
   ],

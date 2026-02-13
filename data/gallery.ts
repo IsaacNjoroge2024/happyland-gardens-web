@@ -173,4 +173,32 @@ export const galleryImages: GalleryImage[] = [
     category: "All",
     eventType: "Wedding",
   },
+  {
+    id: "gallery-25",
+    src: "/images/gallery/happyland-gardens-content-creator-1.png",
+    alt: "Content creation session at Happyland Gardens",
+    category: "All",
+    eventType: "Content Creation",
+  },
+  {
+    id: "gallery-26",
+    src: "/images/gallery/happyland-gardens-content-creator-2.png",
+    alt: "Professional content creation shoot at Happyland Gardens",
+    category: "All",
+    eventType: "Content Creation",
+  },
+  {
+    id: "gallery-27",
+    src: "/images/gallery/happyland-gardens-content-creator-3.png",
+    alt: "Creative content production at Happyland Gardens",
+    category: "All",
+    eventType: "Content Creation",
+  },
+  {
+    id: "gallery-28",
+    src: "/images/gallery/happyland-gardens-content-creator-4.png",
+    alt: "Content creator working at Happyland Gardens venue",
+    category: "All",
+    eventType: "Content Creation",
+  },
 ];

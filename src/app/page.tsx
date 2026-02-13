@@ -37,7 +37,7 @@ export default function Home() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": ["EventVenue", "LocalBusiness"],
-    name: "Happyland Gardens",
+    name: contactInfo.businessName,
     description: siteMetadata.siteDescription,
     address: {
       "@type": "PostalAddress",
@@ -54,7 +54,7 @@ export default function Home() {
     telephone: contactInfo.phone,
     email: contactInfo.email,
     priceRange: "$",
-    openingHours: ["Mo-Fr 09:00-18:00", "Sa-Su 08:00-20:00"],
+    openingHours: ["Mo-Su 08:00-02:00"],
     areaServed: "Nairobi, Kenya",
   };
 

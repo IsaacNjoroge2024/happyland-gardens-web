@@ -7,7 +7,7 @@ import { contactInfo } from "@/data/contact";
 import { Button } from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import { H2, H3, BodyText, Caption } from "@/components/ui/Typography";
-import { cn, formatPhoneNumber, getPhoneLink } from "@/lib/utils";
+import { cn, formatPhoneNumber, getPhoneLink, getWhatsAppLink } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { useToast } from "@/context";
@@ -16,6 +16,8 @@ interface BookingModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
+
+const WHATSAPP_BOOKING_MESSAGE = "Hi! I'm interested in booking Happyland Gardens for an event.";
 
 export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
   const modalRef = useFocusTrap<HTMLDivElement>(isOpen);
@@ -72,17 +74,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
     return isMobile()
       ? contactInfo.mapsLinkMobile || contactInfo.mapsLink
       : contactInfo.mapsLinkDesktop || contactInfo.mapsLink;
-  };
-
-  // Get WhatsApp link with pre-filled message
-  const getWhatsAppLink = () => {
-    if (contactInfo.whatsappLink) {
-      return contactInfo.whatsappLink;
-    }
-    const message = "Hi! I'm interested in booking Happyland Gardens for an event.";
-    const cleanedPhone = contactInfo.whatsapp.replace(/\D/g, "");
-    const encodedMessage = encodeURIComponent(message);
-    return `https://wa.me/${cleanedPhone}?text=${encodedMessage}`;
   };
 
   return (
@@ -191,7 +182,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) =
                     <Button
                       variant="primary"
                       size="md"
-                      href={getWhatsAppLink()}
+                      href={getWhatsAppLink(contactInfo.whatsapp, WHATSAPP_BOOKING_MESSAGE)}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => {
