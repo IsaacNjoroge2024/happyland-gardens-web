@@ -105,7 +105,7 @@ export const About: React.FC<AboutProps> = ({ data }) => {
           >
             <div className="relative w-full aspect-4/3 rounded-xl overflow-hidden shadow-2xl">
               <ImageWrapper
-                src="/images/hero/garden-parties-card.png"
+                src="/images/hero/garden-parties-card.webp"
                 alt="Beautiful garden venue with lush greenery"
                 fill
                 objectFit="cover"

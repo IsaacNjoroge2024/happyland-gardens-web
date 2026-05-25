@@ -120,14 +120,19 @@ export const Hero: React.FC<HeroProps> = ({ data }) => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/50" />
       </div>
 
-      {/* Preload all hero images upfront so slide transitions are instant */}
-      <div className="sr-only" aria-hidden="true">
-        {data.images.map((image, index) =>
-          index !== currentSlide ? (
-            <ImageWrapper key={image.src} src={image.src} alt="" fill priority sizes="100vw" />
-          ) : null
-        )}
-      </div>
+      {/* Preload adjacent hero images so slide transitions are instant */}
+      {data.images.length > 1 && (
+        <div className="sr-only" aria-hidden="true">
+          {[
+            data.images[(currentSlide + 1) % data.images.length],
+            data.images[(currentSlide - 1 + data.images.length) % data.images.length],
+          ]
+            .filter((img, i, arr) => arr.indexOf(img) === i)
+            .map((image) => (
+              <ImageWrapper key={image.src} src={image.src} alt="" fill priority sizes="100vw" />
+            ))}
+        </div>
+      )}
 
       {/* Slideshow Indicators and Controls */}
       {data.images.length > 1 && (

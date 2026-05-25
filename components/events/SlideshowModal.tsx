@@ -24,6 +24,7 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
   const prefersReducedMotion = useReducedMotion();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isHoverPaused, setIsHoverPaused] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -64,9 +65,9 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
     }
   }, [isOpen, event.name]);
 
-  // Auto-advance slideshow
+  // Auto-advance slideshow; pauses on hover and resumes on mouse leave
   useEffect(() => {
-    if (!isOpen || !isAutoPlaying || !hasMultipleImages || prefersReducedMotion) {
+    if (!isOpen || !isAutoPlaying || isHoverPaused || !hasMultipleImages || prefersReducedMotion) {
       return;
     }
 
@@ -79,7 +80,7 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
         clearInterval(autoPlayIntervalRef.current);
       }
     };
-  }, [isOpen, isAutoPlaying, images.length, hasMultipleImages, prefersReducedMotion]);
+  }, [isOpen, isAutoPlaying, isHoverPaused, images.length, hasMultipleImages, prefersReducedMotion]);
 
   // Pause auto-play on manual interaction
   const pauseAutoPlay = useCallback(() => {
@@ -220,7 +221,8 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
             transition={{ duration: 0.3, delay: 0.1 }}
             className="relative w-full max-w-6xl max-h-[90vh] bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col"
             onClick={(e) => e.stopPropagation()}
-            onMouseEnter={pauseAutoPlay}
+            onMouseEnter={() => setIsHoverPaused(true)}
+            onMouseLeave={() => setIsHoverPaused(false)}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}

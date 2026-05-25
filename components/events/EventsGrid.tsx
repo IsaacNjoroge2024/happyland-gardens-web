@@ -61,9 +61,10 @@ export const EventsGrid: React.FC<EventsGridProps> = ({ events }) => {
         ))}
       </div>
 
-      {/* Slideshow Modal */}
+      {/* Slideshow Modal — key resets all slide state when switching events */}
       {selectedEvent && (
         <SlideshowModal
+          key={selectedEvent.id}
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           event={selectedEvent}
