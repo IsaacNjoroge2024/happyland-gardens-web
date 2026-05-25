@@ -8,26 +8,13 @@
  * ImageWrapper imports this map for colour-accurate per-image blur previews.
  */
 
+const { findFiles } = require("./utils");
 const sharp = require("sharp");
 const fs = require("fs");
 const path = require("path");
 
 const PUBLIC_IMAGES_DIR = path.join(process.cwd(), "public", "images");
 const OUTPUT_PATH = path.join(process.cwd(), "lib", "image-placeholders.ts");
-
-function findFiles(dir, ext) {
-  const results = [];
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
-  for (const entry of entries) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      results.push(...findFiles(fullPath, ext));
-    } else if (entry.name.toLowerCase().endsWith(ext)) {
-      results.push(fullPath);
-    }
-  }
-  return results;
-}
 
 async function generatePlaceholders() {
   console.log("🎨 Generating image placeholders...\n");

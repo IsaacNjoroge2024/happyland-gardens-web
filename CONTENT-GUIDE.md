@@ -78,7 +78,7 @@ Each event object contains:
 2. Copy an existing event object in `data/events.ts` and update all fields.
 3. Make sure `id` and `slug` are unique and use hyphens (e.g. `"bbq-nights"`).
 4. Add image paths to the `images` array using the format
-   `/images/gallery/your-image.png`.
+   `/images/gallery/your-image.webp`.
 5. Test locally with `npm run dev`, then commit and push.
 
 **Removing an event type:**
@@ -95,7 +95,7 @@ anywhere, you may also remove them from `public/images/gallery/`.
 The gallery on the homepage pulls its images from this file. Each entry has:
 
 - `id` — unique identifier (e.g. `"gallery-25"`)
-- `src` — path to the image file (e.g. `/images/gallery/your-image.png`)
+- `src` — path to the image file (e.g. `/images/gallery/your-image.webp`)
 - `alt` — descriptive text for the image (required for accessibility)
 - `category` — currently `"All"` for all images
 - `eventType` — the type of event (e.g. `"Wedding"`, `"Corporate"`)
@@ -109,7 +109,7 @@ The gallery on the homepage pulls its images from this file. Each entry has:
 ```typescript
 {
   id: "gallery-25",
-  src: "/images/gallery/your-new-image.png",
+  src: "/images/gallery/your-new-image.webp",
   alt: "Description of what is happening in the image",
   category: "All",
   eventType: "Wedding",
@@ -193,18 +193,24 @@ Controls the browser tab title, meta description, and social sharing cards
 
 ### Optimal Dimensions
 
-| Image type     | Recommended dimensions | Format      |
-| -------------- | ---------------------- | ----------- |
-| Event card     | 1200 x 900 px          | PNG or WebP |
-| Gallery image  | 1600 x 1200 px         | PNG or WebP |
-| Hero slideshow | 1920 x 1080 px         | JPG or WebP |
-| OG / social    | 1200 x 634 px          | PNG         |
+| Image type     | Recommended dimensions | Format                    |
+| -------------- | ---------------------- | ------------------------- |
+| Event card     | 1200 x 900 px          | WebP (converted at build) |
+| Gallery image  | 1600 x 1200 px         | WebP (converted at build) |
+| Hero slideshow | 1920 x 1080 px         | WebP (converted at build) |
+| OG / social    | 1200 x 634 px          | PNG (keep as-is)          |
 
 ### File Size Limits
 
 - **Target:** under 500 KB per image after compression.
-- Next.js automatically converts images to WebP/AVIF at build time, but
-  smaller source files improve build speed and local development performance.
+- The build pipeline (`npm run optimize-images`) converts PNG source files to
+  WebP automatically before each production build. Source PNGs can be kept for
+  archival, but `.webp` paths are what you reference in the data files.
+- At serve time, Next.js delivers **AVIF** to browsers that support it (AVIF is
+  intentionally preferred — it is ~50% smaller than WebP). Browsers that do not
+  support AVIF receive **WebP** as a fallback. This is controlled by the
+  `images.formats` order in `next.config.ts` and requires no action from
+  content editors.
 
 ### File Naming Convention
 
@@ -212,15 +218,15 @@ Controls the browser tab title, meta description, and social sharing cards
   characters.
 - Be descriptive so the file is easy to identify.
 - Gallery images follow the pattern:
-  `happyland-gardens-[activity]-gallery.png`
-- Event card images follow the pattern: `[event-type]-card.png`
+  `happyland-gardens-[activity]-gallery.webp`
+- Event card images follow the pattern: `[event-type]-card.webp`
 
 Examples:
 
 ```
-happyland-gardens-bbq-night-gallery.png    (good)
-BBQ Night Gallery.png                      (bad — spaces and capitals)
-img_0042.png                               (bad — not descriptive)
+happyland-gardens-bbq-night-gallery.webp    (good)
+BBQ Night Gallery.png                       (bad — spaces and capitals)
+img_0042.png                                (bad — not descriptive)
 ```
 
 ### Adding a New Image (Step by Step)

@@ -312,16 +312,18 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
             {/* Preload adjacent modal images so slide transitions are instant */}
             {hasMultipleImages && (
               <div className="sr-only" aria-hidden="true">
-                {[images[nextIndex], images[prevIndex]].map((src) => (
-                  <ImageWrapper
-                    key={src}
-                    src={src}
-                    alt=""
-                    fill
-                    priority
-                    sizes="(max-width: 768px) 100vw, 90vw"
-                  />
-                ))}
+                {[images[nextIndex], images[prevIndex]]
+                  .filter((src, i, arr) => arr.indexOf(src) === i)
+                  .map((src) => (
+                    <ImageWrapper
+                      key={src}
+                      src={src}
+                      alt=""
+                      fill
+                      priority
+                      sizes="(max-width: 768px) 100vw, 90vw"
+                    />
+                  ))}
               </div>
             )}
 
