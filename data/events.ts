@@ -12,11 +12,11 @@ export const eventTypes: EventType[] = [
     description:
       "Create your dream wedding at our beautiful outdoor venue. Our lush gardens and elegant spaces provide the perfect backdrop for your special day. From intimate ceremonies to grand celebrations, we make your wedding unforgettable.",
     images: [
-      "/images/hero/wedding-card.png",
-      "/images/gallery/happyland-gardens-garden-wedding-gallery.png",
-      "/images/gallery/happyland-gardens-wedding-dance-gallery.png",
-      "/images/gallery/happyland-gardens-photographer-gallery.png",
-      "/images/gallery/happyland-gardens-live-jazz-gallery.png",
+      "/images/hero/wedding-card.webp",
+      "/images/gallery/happyland-gardens-garden-wedding-gallery.webp",
+      "/images/gallery/happyland-gardens-wedding-dance-gallery.webp",
+      "/images/gallery/happyland-gardens-photographer-gallery.webp",
+      "/images/gallery/happyland-gardens-live-jazz-gallery.webp",
     ],
     features: [
       "Beautiful outdoor ceremony space",
@@ -38,12 +38,12 @@ export const eventTypes: EventType[] = [
     description:
       "Host your next corporate event in our professional and inspiring environment. Perfect for conferences, team building activities, product launches, and company celebrations. Modern facilities meet natural beauty.",
     images: [
-      "/images/hero/coorporate-event-card.png",
-      "/images/gallery/happyland-gardens-corporate-tug-of-war-gallery.png",
-      "/images/gallery/happyland-gardens-cooking-class-gallery.png",
-      "/images/gallery/happyland-gardens-painting-class-gallery.png",
-      "/images/gallery/happyland-gardens-pottery-gallery.png",
-      "/images/gallery/happyland-gardens-nyama-choma-grill-gallery.png",
+      "/images/hero/coorporate-event-card.webp",
+      "/images/gallery/happyland-gardens-corporate-tug-of-war-gallery.webp",
+      "/images/gallery/happyland-gardens-cooking-class-gallery.webp",
+      "/images/gallery/happyland-gardens-painting-class-gallery.webp",
+      "/images/gallery/happyland-gardens-pottery-gallery.webp",
+      "/images/gallery/happyland-gardens-nyama-choma-grill-gallery.webp",
     ],
     features: [
       "Conference facilities",
@@ -65,13 +65,13 @@ export const eventTypes: EventType[] = [
     description:
       "Celebrate your special day in style! Whether it's a milestone birthday or an intimate gathering, our venue offers the perfect setting for memorable birthday celebrations with family and friends.",
     images: [
-      "/images/gallery/happyland-gardens-bouncy-castle-gallery.png",
-      "/images/hero/birthday-card.png",
-      "/images/gallery/happyland-gardens-child-sports-gallery.png",
-      "/images/gallery/happyland-gardens-puppet-show-gallery.png",
-      "/images/gallery/happyland-gardens-petting-zoo-gallery.png",
-      "/images/gallery/happyland-gardens-archery-gallery.png",
-      "/images/gallery/happyland-gardens-movie-night-gallery.png",
+      "/images/gallery/happyland-gardens-bouncy-castle-gallery.webp",
+      "/images/hero/birthday-card.webp",
+      "/images/gallery/happyland-gardens-child-sports-gallery.webp",
+      "/images/gallery/happyland-gardens-puppet-show-gallery.webp",
+      "/images/gallery/happyland-gardens-petting-zoo-gallery.webp",
+      "/images/gallery/happyland-gardens-archery-gallery.webp",
+      "/images/gallery/happyland-gardens-movie-night-gallery.webp",
     ],
     features: [
       "Flexible party spaces",
@@ -93,10 +93,10 @@ export const eventTypes: EventType[] = [
     description:
       "Welcome the new arrival in our charming garden setting. Our intimate spaces are perfect for baby showers, offering a warm and welcoming atmosphere for this special celebration with loved ones.",
     images: [
-      "/images/hero/baby-shower-card.png",
-      "/images/gallery/happyland-gardens-painting-class-gallery.png",
-      "/images/gallery/happyland-gardens-high-tea-gallery.png",
-      "/images/gallery/happyland-gardens-pottery-gallery.png",
+      "/images/hero/baby-shower-card.webp",
+      "/images/gallery/happyland-gardens-painting-class-gallery.webp",
+      "/images/gallery/happyland-gardens-high-tea-gallery.webp",
+      "/images/gallery/happyland-gardens-pottery-gallery.webp",
     ],
     features: [
       "Intimate garden settings",
@@ -118,12 +118,12 @@ export const eventTypes: EventType[] = [
     description:
       "Celebrate academic achievements in our elegant venue. Perfect for graduation parties, our space offers a sophisticated yet fun atmosphere to honor your graduate's success with family and friends.",
     images: [
-      "/images/hero/graduation-card.png",
-      "/images/gallery/happyland-gardens-graduation-celebration-gallery.png",
-      "/images/gallery/happyland-gardens-dj-concert-gallery.png",
-      "/images/gallery/happyland-gardens-high-tea-gallery.png",
-      "/images/gallery/happyland-gardens-nyama-choma-grill-gallery.png",
-      "/images/gallery/happyland-gardens-live-jazz-gallery.png",
+      "/images/hero/graduation-card.webp",
+      "/images/gallery/happyland-gardens-graduation-celebration-gallery.webp",
+      "/images/gallery/happyland-gardens-dj-concert-gallery.webp",
+      "/images/gallery/happyland-gardens-high-tea-gallery.webp",
+      "/images/gallery/happyland-gardens-nyama-choma-grill-gallery.webp",
+      "/images/gallery/happyland-gardens-live-jazz-gallery.webp",
     ],
     features: [
       "Spacious event areas",
@@ -145,11 +145,11 @@ export const eventTypes: EventType[] = [
     description:
       "Bring the whole family together in our spacious and welcoming venue. Our gardens provide the perfect setting for family reunions, offering plenty of space for activities, dining, and making memories.",
     images: [
-      "/images/gallery/happyland-gardens-family-picnic-reunion-gallery.png",
-      "/images/gallery/happyland-gardens-nyama-choma-grill-gallery.png",
-      "/images/hero/family-reunions-card.png",
-      "/images/gallery/happyland-gardens-movie-night-gallery.png",
-      "/images/gallery/happyland-gardens-campfire-sing-gallery.png",
+      "/images/gallery/happyland-gardens-family-picnic-reunion-gallery.webp",
+      "/images/gallery/happyland-gardens-nyama-choma-grill-gallery.webp",
+      "/images/hero/family-reunions-card.webp",
+      "/images/gallery/happyland-gardens-movie-night-gallery.webp",
+      "/images/gallery/happyland-gardens-campfire-sing-gallery.webp",
     ],
     features: [
       "Large open spaces",
@@ -171,11 +171,11 @@ export const eventTypes: EventType[] = [
     description:
       "Experience the beauty of outdoor entertaining in our stunning gardens. Perfect for any celebration, from intimate gatherings to grand garden parties surrounded by nature's beauty.",
     images: [
-      "/images/hero/garden-parties-card.png",
-      "/images/gallery/happyland-gardens-high-tea-gallery.png",
-      "/images/gallery/happyland-gardens-live-jazz-gallery.png",
-      "/images/gallery/happyland-gardens-fashion-show-gallery.png",
-      "/images/gallery/happyland-gardens-pottery-gallery.png",
+      "/images/hero/garden-parties-card.webp",
+      "/images/gallery/happyland-gardens-high-tea-gallery.webp",
+      "/images/gallery/happyland-gardens-live-jazz-gallery.webp",
+      "/images/gallery/happyland-gardens-fashion-show-gallery.webp",
+      "/images/gallery/happyland-gardens-pottery-gallery.webp",
     ],
     features: [
       "Beautiful landscaped gardens",
@@ -197,11 +197,11 @@ export const eventTypes: EventType[] = [
     description:
       "Start your journey to forever in our romantic garden setting. Our venue provides the perfect intimate atmosphere for engagement parties and celebrations of love.",
     images: [
-      "/images/hero/engagment-parties-card.png",
-      "/images/gallery/happyland-gardens-nyama-choma-grill-gallery.png",
-      "/images/gallery/happyland-gardens-garden-wedding-gallery.png",
-      "/images/gallery/happyland-gardens-high-tea-gallery.png",
-      "/images/gallery/happyland-gardens-live-jazz-gallery.png",
+      "/images/hero/engagment-parties-card.webp",
+      "/images/gallery/happyland-gardens-nyama-choma-grill-gallery.webp",
+      "/images/gallery/happyland-gardens-garden-wedding-gallery.webp",
+      "/images/gallery/happyland-gardens-high-tea-gallery.webp",
+      "/images/gallery/happyland-gardens-live-jazz-gallery.webp",
     ],
     features: [
       "Romantic garden settings",
@@ -223,10 +223,10 @@ export const eventTypes: EventType[] = [
     description:
       "Create stunning visual content in our picturesque venue. Perfect for photoshoots, video production, social media content creation, and brand campaigns. Our beautiful gardens provide the ideal backdrop for your creative vision.",
     images: [
-      "/images/gallery/happyland-gardens-content-creator-1.png",
-      "/images/gallery/happyland-gardens-content-creator-2.png",
-      "/images/gallery/happyland-gardens-content-creator-3.png",
-      "/images/gallery/happyland-gardens-content-creator-4.png",
+      "/images/gallery/happyland-gardens-content-creator-1.webp",
+      "/images/gallery/happyland-gardens-content-creator-2.webp",
+      "/images/gallery/happyland-gardens-content-creator-3.webp",
+      "/images/gallery/happyland-gardens-content-creator-4.webp",
     ],
     features: [
       "Diverse photo backdrops",
