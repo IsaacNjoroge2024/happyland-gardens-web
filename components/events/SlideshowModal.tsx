@@ -80,7 +80,14 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
         clearInterval(autoPlayIntervalRef.current);
       }
     };
-  }, [isOpen, isAutoPlaying, isHoverPaused, images.length, hasMultipleImages, prefersReducedMotion]);
+  }, [
+    isOpen,
+    isAutoPlaying,
+    isHoverPaused,
+    images.length,
+    hasMultipleImages,
+    prefersReducedMotion,
+  ]);
 
   // Pause auto-play on manual interaction
   const pauseAutoPlay = useCallback(() => {
