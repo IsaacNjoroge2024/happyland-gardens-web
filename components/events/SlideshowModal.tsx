@@ -37,6 +37,8 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
 
   // Clamp currentIndex to valid range if event changes
   const safeIndex = Math.min(currentIndex, images.length - 1);
+  const nextIndex = (safeIndex + 1) % images.length;
+  const prevIndex = (safeIndex - 1 + images.length) % images.length;
 
   // Prevent body scroll when modal is open
   useEffect(() => {
@@ -194,24 +196,6 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
     }
   };
 
-  // Preload adjacent images
-  useEffect(() => {
-    if (!isOpen || images.length === 0) return;
-
-    const preloadImage = (src: string) => {
-      const img = new Image();
-      img.src = src;
-    };
-
-    // Preload next image
-    const nextIndex = (safeIndex + 1) % images.length;
-    preloadImage(images[nextIndex]);
-
-    // Preload previous image
-    const prevIndex = (safeIndex - 1 + images.length) % images.length;
-    preloadImage(images[prevIndex]);
-  }, [safeIndex, images, isOpen]);
-
   return (
     <AnimatePresence>
       {isOpen && (
@@ -276,7 +260,7 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
                     fill
                     objectFit="contain"
                     sizes="(max-width: 768px) 100vw, 90vw"
-                    priority={safeIndex === 0}
+                    priority
                   />
                 </motion.div>
               </AnimatePresence>
@@ -315,6 +299,22 @@ export const SlideshowModal: React.FC<SlideshowModalProps> = ({
                 </p>
               </div>
             </div>
+
+            {/* Preload adjacent modal images so slide transitions are instant */}
+            {hasMultipleImages && (
+              <div className="sr-only" aria-hidden="true">
+                {[images[nextIndex], images[prevIndex]].map((src) => (
+                  <ImageWrapper
+                    key={src}
+                    src={src}
+                    alt=""
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 100vw, 90vw"
+                  />
+                ))}
+              </div>
+            )}
 
             {/* Image Indicators (Dots) and Controls */}
             {hasMultipleImages && (

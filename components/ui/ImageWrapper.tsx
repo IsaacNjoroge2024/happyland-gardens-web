@@ -4,6 +4,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { HiPhoto } from "react-icons/hi2";
+import { imagePlaceholders } from "@/lib/image-placeholders";
 
 interface ImageWrapperProps {
   src: string;
@@ -40,6 +41,7 @@ const ImageWrapper: React.FC<ImageWrapperProps> = ({
   objectFit = "cover",
 }) => {
   const [hasError, setHasError] = useState(false);
+  const resolvedBlurDataURL = imagePlaceholders[src] ?? BLUR_DATA_URL;
 
   if (hasError) {
     return (
@@ -72,7 +74,7 @@ const ImageWrapper: React.FC<ImageWrapperProps> = ({
         sizes={sizes || "100vw"}
         priority={priority}
         placeholder="blur"
-        blurDataURL={BLUR_DATA_URL}
+        blurDataURL={resolvedBlurDataURL}
         onError={handleError}
       />
     );
@@ -88,7 +90,7 @@ const ImageWrapper: React.FC<ImageWrapperProps> = ({
       sizes={sizes}
       priority={priority}
       placeholder="blur"
-      blurDataURL={BLUR_DATA_URL}
+      blurDataURL={resolvedBlurDataURL}
       onError={handleError}
     />
   );

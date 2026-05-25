@@ -109,7 +109,7 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
                     src={images[safeIndex].src}
                     alt={images[safeIndex].alt}
                     fill
-                    priority={safeIndex === 0}
+                    priority
                     objectFit="cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1200px"
                   />
@@ -197,6 +197,25 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
               </motion.div>
             </div>
           </div>
+
+          {/* Preload adjacent gallery images so navigation is instant */}
+          {hasImages && images.length > 1 && (
+            <div className="sr-only" aria-hidden="true">
+              {[
+                images[(safeIndex + 1) % images.length],
+                images[(safeIndex - 1 + images.length) % images.length],
+              ].map((image) => (
+                <ImageWrapper
+                  key={image.src}
+                  src={image.src}
+                  alt=""
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1200px"
+                />
+              ))}
+            </div>
+          )}
 
           {/* More Coming Soon Message */}
           <motion.div

@@ -8,9 +8,10 @@ import { EventType } from "@/types";
 interface EventCardProps {
   event: EventType;
   onClick?: () => void;
+  priority?: boolean;
 }
 
-export const EventCard: React.FC<EventCardProps> = ({ event, onClick }) => {
+export const EventCard: React.FC<EventCardProps> = ({ event, onClick, priority = false }) => {
   const featuredImage = event.images[0] || "/images/hero/garden-parties-card.png";
   const isInteractive = Boolean(onClick);
 
@@ -42,6 +43,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event, onClick }) => {
           src={featuredImage}
           alt={`${event.name} at Happyland Gardens`}
           fill
+          priority={priority}
           objectFit="cover"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="group-hover:scale-110 transition-transform duration-500"

@@ -51,8 +51,13 @@ export const EventsGrid: React.FC<EventsGridProps> = ({ events }) => {
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-        {events.map((event) => (
-          <EventCard key={event.id} event={event} onClick={() => handleEventClick(event)} />
+        {events.map((event, index) => (
+          <EventCard
+            key={event.id}
+            event={event}
+            priority={index < 3}
+            onClick={() => handleEventClick(event)}
+          />
         ))}
       </div>
 
