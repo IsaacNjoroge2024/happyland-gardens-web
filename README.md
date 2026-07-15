@@ -2,6 +2,8 @@
 
 This is a [Next.js](https://nextjs.org) project for Happyland Gardens, a premier event venue in Nairobi, Kenya.
 
+**Live Site**: [https://happyland-gardens-web.vercel.app/](https://happyland-gardens-web.vercel.app/)
+
 ## Getting Started
 
 First, install dependencies:
@@ -96,7 +98,6 @@ npm run format:check # Check code formatting
 ## Documentation
 
 - **Design System**: See `DESIGN-SYSTEM.md` for colors, typography, and component usage
-- **Development Guide**: See `CLAUDE.md` for detailed development instructions
 - **Component Showcase**: Visit `/test-components` to see all UI components
 
 ## Tech Stack
